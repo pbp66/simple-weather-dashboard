@@ -1,4 +1,5 @@
 const API = require('./api.js');
+const Geocoding = require('./geocoding.js');
 
 // API Key: 1b3bacfd2da20311ada4894fff0d35e8
 
