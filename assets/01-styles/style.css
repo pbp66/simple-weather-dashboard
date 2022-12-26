@@ -1,3 +1,35 @@
-html, body, main {
-    width: 100%;
+html,
+body,
+main {
+	width: 100%;
+}
+
+/* Set Dynamically based on current weather */
+body {
+	background-image: url(../03-images/storming.jpg);
+	background-size: cover;
+}
+
+.bg-light-custom {
+	background: rgba(211, 211, 211, 0.6);
+	border-radius: 15px;
+}
+
+.city {
+	background: rgba(211, 211, 211, 0.6);
+	border-radius: 15px;
+	margin: 5px;
+	padding: 5px;
+	width: fit-content;
+	min-width: 150px;
+}
+
+#website-header {
+	padding: 5px;
+	margin: 5px;
+}
+
+#search {
+	margin: 5px;
+	padding: 10px;
 }
