@@ -32,58 +32,84 @@
 		<title>Weather Dashboard</title>
 	</head>
 	<body>
-		<header>
-			<div>Weather Dashboard</div>
+		<header class="container-fluid bg-light-custom">
+			<h1
+				class="text-center"
+				id="website-header"
+			>
+				Weather Dashboard
+			</h1>
 		</header>
-		<main>
+		<main class="container-fluid row">
 			<article
-				class="container"
+				class="container-fluid ms-3 col-6"
 				id="search-container"
 			>
 				<div
-					class="container"
+					class="container-fluid justify-content-start row input-group bg-light-custom search-item"
 					id="search"
 				>
-					<h3>Search For A City:</h3>
-					<input
-						type="text"
-						placeholder="12345 or Madison, WI"
-					/>
-					<button>Search</button>
+					<label
+						class="form-label"
+						for="city-input"
+					>
+						<h3>Search for a City</h3>
+					</label>
+					<div class="input-group">
+						<input
+							type="text"
+							placeholder="12345 or Madison, WI"
+							class="form-control border-primary"
+							id="city-input"
+						/>
+						<button class="btn btn-primary">Search</button>
+					</div>
 				</div>
 				<div
-					class="container"
+					class="container-fluid row search-item"
 					id="history"
 				>
-					<ul>
-						<li>City 1</li>
-						<li>City 2</li>
-						<li>City 3</li>
-						<li>City 4</li>
-						<li>City 5</li>
-						<li>City 6</li>
-						<li>City 7</li>
-						<li>City 8</li>
+					<ul
+						class="container-fluid justify-content-center search-history col"
+					>
+						<li class="city text-center">City 1</li>
+						<li class="city text-center">City 2</li>
+						<li class="city text-center">City 3</li>
+						<li class="city text-center">City 4</li>
+						<li class="city text-center">City 5</li>
+						<li class="city text-center">City 6</li>
+						<li class="city text-center">City 7</li>
+						<li class="city text-center">City 8</li>
 					</ul>
 				</div>
 			</article>
 			<article
-				class="container"
+				class="container-fluid col-6"
 				id="weather"
 			>
 				<div
-					class="container"
+					class="container-fluid"
 					id="current-weather"
 				>
 					<div
-						class="card"
-						id="current"
+						class="card bg-light-custom"
+						id="current-weather-card"
 					>
-						<div class="card-body row">
-							<h5 class="card-title col">City - Weather Emoji</h5>
-							<h6 class="card-subtitle col text-muted">
-								MM/DD/YYYY
-							</h6>
+						<div class="card-body current-weather-card">
+							<div class="container-fluid title-bar">
+								<h6
+									class="card-subtitle text-muted"
+									id="current-weather-date"
+								>
+									MM/DD/YYYY
+								</h6>
+								<h4
+									class="card-title"
+									id="current-weather-title"
+								>
+									City - Weather Emoji
+								</h4>
+							</div>
 							<p class="card-text">
 								<span> Temperature </span><br />
 								<span> Windspeed </span><br />
@@ -94,62 +120,73 @@
 					</div>
 				</div>
 				<div
-					class="container"
-					id="5-day-forecast"
+					class="container-fluid bg-light-custom"
+					id="forecast-5-day"
 				>
 					<h3>5-Day Forecast:</h3>
-					<div
-						class="card"
-						id="day-1"
-					>
-						MM/DD/YYYY<br />
-						Weather Emoji<br />
-						Temperature<br />
-						Windspeed<br />
-						Humidity<br />
-						Other Weather<br />
+					<div class="cards row">
+						<div
+							class="card col forecast-card bg-dark text-light"
+							id="day-1"
+						>
+							MM/DD/YYYY<br />
+							Weather Emoji<br />
+							Temperature<br />
+							Windspeed<br />
+							Humidity<br />
+							Other Weather<br />
+						</div>
+						<div
+							class="card col forecast-card bg-dark text-light"
+							id="day-2"
+						>
+							MM/DD/YYYY<br />
+							Weather Emoji<br />
+							Temperature<br />
+							Windspeed<br />
+							Humidity<br />
+							Other Weather<br />
+						</div>
+						<div
+							class="card col forecast-card bg-dark text-light"
+							id="day-3"
+						>
+							MM/DD/YYYY<br />
+							Weather Emoji<br />
+							Temperature<br />
+							Windspeed<br />
+							Humidity<br />
+							Other Weather<br />
+						</div>
+						<div
+							class="card col forecast-card bg-dark text-light"
+							id="day-4"
+						>
+							MM/DD/YYYY<br />
+							Weather Emoji<br />
+							Temperature<br />
+							Windspeed<br />
+							Humidity<br />
+							Other Weather<br />
+						</div>
+						<div
+							class="card col forecast-card bg-dark text-light"
+							id="day-5"
+						>
+							MM/DD/YYYY<br />
+							Weather Emoji<br />
+							Temperature<br />
+							Windspeed<br />
+							Humidity<br />
+							Other Weather<br />
+						</div>
 					</div>
-					<div
-						class="card"
-						id="day-2"
-					>
-						MM/DD/YYYY<br />
-						Weather Emoji<br />
-						Temperature<br />
-						Windspeed<br />
-						Humidity<br />
-						Other Weather<br />
-					</div>
-					<div
-						class="card"
-						id="day-3"
-					>
-						MM/DD/YYYY<br />
-						Weather Emoji<br />
-						Temperature<br />
-						Windspeed<br />
-						Humidity<br />
-						Other Weather<br />
-					</div>
-					<div
-						class="card"
-						id="day-4"
-					>
-						MM/DD/YYYY<br />
-						Weather Emoji<br />
-						Temperature<br />
-						Windspeed<br />
-						Humidity<br />
-						Other Weather<br />
-					</div>
-					<div
-						class="card"
-						id="day-5"
-					></div>
 				</div>
 			</article>
 		</main>
-		<footer></footer>
+		<footer>
+			<!-- Provide reference/link to source of background image and API resource -->
+		</footer>
 	</body>
 	<script href="./assets/02-scripts/script.js"></script>
 </html>
