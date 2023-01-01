@@ -8,25 +8,46 @@ class Geocoding extends API {
 		);
 	}
 
-	getCoordinatesByLocationName(city, countryCode, state = null) {
-		if (state) {
+	async getCoordinatesByLocationName(city, countryCode = null, state = null) {
+		if (state && countryCode) {
 			this.setSearchParameters({
 				q: `${city},${state},${countryCode}`,
 				appid: this.getApiKey(),
 			});
-		} else {
+		} else if (!state) {
 			this.setSearchParameters({
 				q: `${city},${countryCode}`,
+				limit: 1,
+				appid: this.getApiKey(),
+			});
+		} else if (!countryCode) {
+			this.setSearchParameters({
+				q: `${city},${state}`,
+				appid: this.getApiKey(),
+			});
+		} else {
+			this.setSearchParameters({
+				q: city,
+				limit: 1,
 				appid: this.getApiKey(),
 			});
 		}
+
+		let response = await this.getCoordinates();
+		const { lat: latitude, lon: longitude } = response;
+
+		return { latitude, longitude };
 	}
 
-	getCoordinatesByZipCode(zipCode, countryCode) {
+	async getCoordinatesByZipCode(zipCode, countryCode) {
 		this.setSearchParameters({
 			q: `${zipCode},${countryCode}`,
 			appid: this.getApiKey(),
 		});
+
+		const response = await this.getCoordinates();
+		const { lat: latitude, lon: longitude } = response;
+		return { latitude, longitude };
 	}
 
 	async getCoordinates() {
