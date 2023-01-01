@@ -1,4 +1,1 @@
-const weather = require('./weather.js');
-
-
-
+import { Weather, Geocoding } from "lib";
