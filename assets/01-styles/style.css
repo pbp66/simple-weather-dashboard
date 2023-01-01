@@ -49,6 +49,18 @@ article {
 	justify-self: flex-start;
 }
 
+.cards {
+	display: flex;
+	flex-flow: row;
+	justify-content: flex-start;
+}
+
+.forecast-card {
+	max-width: 175px;
+	border-radius: 15px;
+	margin: 5px 10px 15px 10px;
+}
+
 #website-header {
 	padding: 5px;
 	margin: 5px;
@@ -64,8 +76,20 @@ article {
 	padding: 10px;
 }
 
+#forecast-5-day {
+	padding-top: 10px;
+	max-width: 925px;
+	justify-content: center;
+}
+
 #current-weather {
 	margin-bottom: 15px;
+	width: 100%;
+	max-width: 925px;
+}
+
+#current-weather-card {
+	width: 100%;
 }
 
 #current-weather-date {
