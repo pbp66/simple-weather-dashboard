@@ -42,11 +42,11 @@
 		</header>
 		<main class="container-fluid row">
 			<article
-				class="container col-4"
+				class="container ms-3"
 				id="search-container"
 			>
 				<div
-					class="container input-group bg-light-custom"
+					class="container-fluid justify-content-start row input-group bg-light-custom search-item"
 					id="search"
 				>
 					<label
@@ -66,10 +66,12 @@
 					</div>
 				</div>
 				<div
-					class="container-fluid row justify-content-center"
+					class="container-fluid row search-item"
 					id="history"
 				>
-					<ul class="col-1">
+					<ul
+						class="container-fluid justify-content-center search-history col-1"
+					>
 						<li class="city text-center">City 1</li>
 						<li class="city text-center">City 2</li>
 						<li class="city text-center">City 3</li>
@@ -82,7 +84,7 @@
 				</div>
 			</article>
 			<article
-				class="container-fluid col-8"
+				class="container-fluid col"
 				id="weather"
 			>
 				<div

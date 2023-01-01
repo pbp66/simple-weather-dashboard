@@ -10,18 +10,34 @@ body {
 	background-size: cover;
 }
 
+article {
+	padding: 15px;
+	margin: 10px;
+}
+
 .bg-light-custom {
 	background: rgba(211, 211, 211, 0.6);
 	border-radius: 15px;
 }
 
+.search-item {
+	width: 100%;
+	justify-content: center;
+}
+
+.search-history {
+	/* margin: 5px; */
+	padding: 0px;
+	width: 100%;
+	min-width: 150px;
+}
+
 .city {
 	background: rgba(211, 211, 211, 0.6);
 	border-radius: 15px;
-	margin: 5px;
+	margin: 5px 0px;
 	padding: 5px;
-	width: fit-content;
-	min-width: 150px;
+	width: 100%;
 }
 
 #website-header {
@@ -29,7 +45,12 @@ body {
 	margin: 5px;
 }
 
+#search-container {
+	padding: 5px 15px;
+	max-width: 450px;
+}
+
 #search {
-	margin: 5px;
+	/* margin: 5px; */
 	padding: 10px;
 }
