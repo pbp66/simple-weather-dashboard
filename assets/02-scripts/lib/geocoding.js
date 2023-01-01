@@ -51,7 +51,7 @@ class Geocoding extends API {
 	}
 
 	async getCoordinates() {
-		return await fetch(this.url);
+		return (await fetch(this.url)).json();
 	}
 }
 
