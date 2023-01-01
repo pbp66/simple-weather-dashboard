@@ -1,5 +1,5 @@
-import API from "./api";
-import Geocoding from "./geocoding";
+import API from "./api.js";
+import Geocoding from "./geocoding.js";
 
 class Weather extends API {
 	constructor() {

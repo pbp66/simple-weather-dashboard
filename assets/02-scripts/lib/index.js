@@ -1,4 +1,4 @@
-import Weather from "./weather";
-import Geocoding from "./geocoding";
+import Weather from "./weather.js";
+import Geocoding from "./geocoding.js";
 
-export default { Weather, Geocoding };
+export { Weather, Geocoding };

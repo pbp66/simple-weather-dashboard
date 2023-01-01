@@ -62,7 +62,12 @@
 							class="form-control border-primary"
 							id="city-input"
 						/>
-						<button class="btn btn-primary">Search</button>
+						<button
+							class="btn btn-primary"
+							id="search-button"
+						>
+							Search
+						</button>
 					</div>
 				</div>
 				<div
@@ -71,6 +76,7 @@
 				>
 					<ul
 						class="container-fluid justify-content-center search-history col"
+						id="search-history-list"
 					>
 						<li class="city text-center">City 1</li>
 						<li class="city text-center">City 2</li>
@@ -188,5 +194,12 @@
 			<!-- Provide reference/link to source of background image and API resource -->
 		</footer>
 	</body>
-	<script href="./assets/02-scripts/script.js"></script>
+	<script
+		type="module"
+		src="./assets/02-scripts/script.js"
+	></script>
+	<script
+		type="module"
+		src="./assets/02-scripts/lib/index.js"
+	></script>
 </html>

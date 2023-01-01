@@ -1,4 +1,4 @@
-import API from "./api";
+import API from "./api.js";
 
 class Geocoding extends API {
 	constructor() {
