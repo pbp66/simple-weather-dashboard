@@ -3,7 +3,7 @@ import API from "./api.js";
 class Geocoding extends API {
 	constructor() {
 		super(
-			"http://api.openweathermap.org/geo/1.0/direct",
+			"http://api.openweathermap.org/geo/1.0",
 			"1b3bacfd2da20311ada4894fff0d35e8"
 		);
 	}
@@ -12,6 +12,7 @@ class Geocoding extends API {
 		if (state && countryCode) {
 			this.setSearchParameters({
 				q: `${city},${state},${countryCode}`,
+				limit: 1,
 				appid: this.getApiKey(),
 			});
 		} else if (!state) {
@@ -23,6 +24,7 @@ class Geocoding extends API {
 		} else if (!countryCode) {
 			this.setSearchParameters({
 				q: `${city},${state}`,
+				limit: 1,
 				appid: this.getApiKey(),
 			});
 		} else {
@@ -33,25 +35,31 @@ class Geocoding extends API {
 			});
 		}
 
+		this.url.pathname += "/direct";
 		let response = await this.getCoordinates();
-		const { lat: latitude, lon: longitude } = response;
-
-		return { latitude, longitude };
+		this.resetURL();
+		return response[0];
 	}
 
 	async getCoordinatesByZipCode(zipCode, countryCode) {
 		this.setSearchParameters({
-			q: `${zipCode},${countryCode}`,
+			zip: `${zipCode},${countryCode}`,
 			appid: this.getApiKey(),
 		});
 
+		this.url.pathname += "/zip";
 		const response = await this.getCoordinates();
-		const { lat: latitude, lon: longitude } = response;
-		return { latitude, longitude };
+		this.resetURL();
+		return response;
 	}
 
 	async getCoordinates() {
-		return (await fetch(this.url)).json();
+		const response = await fetch(this.url);
+		if (response.ok) {
+			return response.json();
+		} else {
+			return null;
+		}
 	}
 }
 

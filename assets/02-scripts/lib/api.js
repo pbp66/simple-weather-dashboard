@@ -28,7 +28,7 @@ class API {
 	}
 
 	resetURL() {
-		this.url = this.#defaultURL;
+		this.url = new URL(this.#defaultURL);
 	}
 
 	setSearchParameters(parameterObject) {
