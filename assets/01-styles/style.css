@@ -11,6 +11,10 @@ body {
 	justify-content: center;
 }
 
+main {
+	justify-content: center;
+}
+
 article {
 	padding: 15px;
 	margin: 10px;
@@ -35,7 +39,7 @@ article {
 .city {
 	background: rgba(211, 211, 211, 0.6);
 	border-radius: 15px;
-	margin: 5px 0px;
+	margin: 10px 0px 10px 13px;
 	padding: 5px;
 	width: 100%;
 }
@@ -62,18 +66,21 @@ article {
 }
 
 #website-header {
-	padding: 5px;
-	margin: 5px;
+	padding: 10px 0px 15px 0px;
+	margin: 0px 10px 15px 10px;
+}
+
+#weather {
+	padding: 0px;
+	width: fit-content;
+	justify-content: flex-start;
+	margin: 0px 15px;
 }
 
 #search-container {
-	padding: 5px 15px;
+	padding: 0px 15px 10px 15px;
 	max-width: 450px;
-}
-
-#search {
-	/* margin: 5px; */
-	padding: 10px;
+	margin: 0px 15px;
 }
 
 #history {
@@ -103,4 +110,10 @@ article {
 
 #current-weather-title {
 	margin: 0px 0px 10px 5px;
+}
+
+#search {
+	margin-right: 0px;
+	padding: 10px;
+	margin-left: 1px;
 }
