@@ -10,8 +10,17 @@ searchButton.addEventListener("click", (event) => {
 	// Make API Calls
 
 	// Add to search history
-	let listItem = document.createElement("li");
-	listItem.classList.add("city", "text-center");
-	listItem.innerText = inputField.value; //TODO: Update value to be a city if user inputs zipcode
-	searchHistoryList.append(listItem);
+	addToSearchHistory(inputField.value);
 });
+
+function addToSearchHistory(locationObject) {
+	const buttonElement = document.createElement("button");
+	buttonElement.classList.add("previous-entry", "btn", "btn-secondary");
+	buttonElement.value = locationObject; // TODO: Change to stringified object with lat and lon
+	buttonElement.innerText = locationObject; // TODO: Change to City Name
+
+	const listItem = document.createElement("li");
+	listItem.classList.add("city", "text-center");
+	listItem.appendChild(buttonElement);
+	searchHistoryList.append(listItem);
+}
