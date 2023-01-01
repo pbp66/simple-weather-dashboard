@@ -40,6 +40,15 @@ article {
 	width: 100%;
 }
 
+.title-bar {
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+.card-title {
+	justify-self: flex-start;
+}
+
 #website-header {
 	padding: 5px;
 	margin: 5px;
@@ -53,4 +62,16 @@ article {
 #search {
 	/* margin: 5px; */
 	padding: 10px;
+}
+
+#current-weather {
+	margin-bottom: 15px;
+}
+
+#current-weather-date {
+	margin: 0px 0px 10px 5px;
+}
+
+#current-weather-title {
+	margin: 0px 0px 10px 5px;
 }
