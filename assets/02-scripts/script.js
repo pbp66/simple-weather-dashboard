@@ -19,29 +19,13 @@ function addToSearchHistory(latitude, longitude, location) {
 	searchHistoryList.append(listItem);
 }
 
-function search(latitude, longitude) {}
+async function fetchWeather(latitude, longitude) {
+	let response;
+	response = await weatherAPI.getCurrentWeather(latitude, longitude);
+	console.log(response);
+}
 
-async function parseSearchInput(inputString) {
-	let latitude, longitude;
-	const location = {};
-
-	// Separates entries by commas. If no commas are provided, the fetch request will give a 404 response
-	const inputValues = inputString.split(",").map((element) => element.trim());
-
-	for (const item of inputValues) {
-		// Check if it contains a zipCode. Note, if the user enters multiple zip codes, only the last one will be taken.
-		if (parseInt(item, 10)) {
-			// All uses zip codes are 5 digits long. This does not work with the extended zip code format
-			if (item.length === 5) {
-				location.zipCode = parseInt(item, 10);
-			}
-		} else if (item.length === 2) {
-			location.state = item;
-		} else if (/^[a-zA-Z]+$/.test(item)) {
-			location.city = item;
-		}
-	}
-
+async function fetchCoordinates(location) {
 	let response;
 	if (location.zipCode == null) {
 		if (location.state == null) {
@@ -68,12 +52,40 @@ async function parseSearchInput(inputString) {
 	}
 }
 
+function parseSearchInput(inputString) {
+	const location = {};
+
+	// Separates entries by commas. If no commas are provided, the fetch request will give a 404 response
+	const inputValues = inputString.split(",").map((element) => element.trim());
+
+	for (const item of inputValues) {
+		// Check if it contains a zipCode. Note, if the user enters multiple zip codes, only the last one will be taken.
+		if (parseInt(item, 10)) {
+			// All uses zip codes are 5 digits long. This does not work with the extended zip code format
+			if (item.length === 5) {
+				location.zipCode = parseInt(item, 10);
+			}
+		} else if (item.length === 2) {
+			location.state = item;
+			// Check if the element is composed of lower case, upper case, and spaces
+		} else if (/^[a-z A-Z]+$/.test(item)) {
+			location.city = item;
+		}
+	}
+
+	return location;
+}
+
 searchButton.addEventListener("click", async (event) => {
 	event.preventDefault();
+
+	let geoLocation;
+	let weatherObject;
+
 	try {
-		const locationObject = await parseSearchInput(inputField.value);
-		console.log(locationObject);
-		if (!locationObject) {
+		const location = parseSearchInput(inputField.value);
+		geoLocation = await fetchCoordinates(location);
+		if (!geoLocation) {
 			throw new Error("Bad Input Error");
 		}
 	} catch (err) {
@@ -81,8 +93,14 @@ searchButton.addEventListener("click", async (event) => {
 		return;
 	}
 
-	// Make API Calls
+	const { lat: latitude, lon: longitude, name, country, state } = geoLocation;
 
-	// Add to search history
+	try {
+		weatherObject = await fetchWeather(latitude, longitude);
+	} catch (err) {
+		console.error(err);
+		return;
+	}
+
 	addToSearchHistory(0, 0, inputField.value);
 });
