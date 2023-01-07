@@ -4,7 +4,7 @@ import Geocoding from "./geocoding.js";
 class Weather extends API {
 	constructor() {
 		super(
-			"http://api.openweathermap.org/data/2.5/forecast",
+			"http://api.openweathermap.org/data/2.5",
 			"1b3bacfd2da20311ada4894fff0d35e8"
 		);
 	}
@@ -13,9 +13,13 @@ class Weather extends API {
 		this.setSearchParameters({
 			lat: latitude,
 			lon: longitude,
-			units: imperial,
+			units: "imperial",
+			appid: this.getApiKey(),
 		});
+
+		this.url.pathname += "/weather";
 		const response = await this.getWeather();
+		this.resetURL();
 		// const weather {} = response;
 		return response;
 	}
@@ -24,8 +28,9 @@ class Weather extends API {
 		this.setSearchParameters({
 			lat: latitude,
 			lon: longitude,
-			units: imperial,
+			units: "imperial",
 			cnt: days,
+			appid: this.getApiKey(),
 		});
 		const response = await this.getWeather();
 		// const weather {} = response;
