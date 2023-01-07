@@ -58,33 +58,8 @@ function parseSearchInput(inputString) {
 	return location;
 }
 
-searchButton.addEventListener("click", async (event) => {
-	event.preventDefault();
-
-	let geoLocation;
-	let currentWeather;
-	let forecast;
-
-	try {
-		const location = parseSearchInput(inputField.value);
-		geoLocation = await fetchCoordinates(location);
-		if (!geoLocation) {
-			throw new Error("Bad Input Error");
-		}
-	} catch (err) {
-		alert("Improper input");
-		return;
-	}
-
-	const { lat: latitude, lon: longitude, name, country, state } = geoLocation;
-
-	try {
-		currentWeather = await fetchCurrentWeather(latitude, longitude);
-		forecast = await fetchForecast(latitude, longitude);
-	} catch (err) {
-		console.error(err);
-		return;
-	}
+function addCurrentWeatherContent(currentWeather, geoLocation) {
+	const { name, state } = geoLocation;
 
 	currentWeatherDate.innerText = currentWeather.dateTime.toLocaleString();
 	currentWeatherCity.innerText = `${name}, ${stateNameToAbbreviation(state)}`;
@@ -109,9 +84,39 @@ searchButton.addEventListener("click", async (event) => {
 		currentWeatherText.appendChild(currentSpan);
 		currentWeatherText.appendChild(document.createElement("br"));
 	}
+}
 
-	console.log(currentWeather);
-	console.log(geoLocation);
+function addForecastWeatherContent(forecastWeather, geoLocation) {}
 
+searchButton.addEventListener("click", async (event) => {
+	event.preventDefault();
+
+	let geoLocation;
+	let currentWeather;
+	let forecast;
+
+	try {
+		const location = parseSearchInput(inputField.value);
+		geoLocation = await fetchCoordinates(location);
+		if (!geoLocation) {
+			throw new Error("Bad Input Error");
+		}
+	} catch (err) {
+		alert("Improper input");
+		return;
+	}
+
+	const { lat: latitude, lon: longitude } = geoLocation;
+
+	try {
+		currentWeather = await fetchCurrentWeather(latitude, longitude);
+		forecast = await fetchForecast(latitude, longitude);
+	} catch (err) {
+		console.error(err);
+		return;
+	}
+
+	addCurrentWeatherContent(currentWeather, geoLocation);
+	addForecastWeatherContent(forecast, geoLocation);
 	addToSearchHistory(0, 0, inputField.value);
 });
