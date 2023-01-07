@@ -19,11 +19,34 @@ function addToSearchHistory(latitude, longitude, location) {
 	searchHistoryList.append(listItem);
 }
 
-async function fetchWeather(latitude, longitude) {
+async function fetchCurrentWeather(latitude, longitude) {
 	let response;
 	response = await weatherAPI.getCurrentWeather(latitude, longitude);
-	console.log(response);
+	const weather = {
+		dateTime: luxon.DateTime.fromSeconds(response.dt),
+		icon: response.weather.icon,
+		weatherId: response.weather.id,
+		temperature: response.main.temp,
+		feelsLikeTemp: response.main.feels_like,
+		lowTemp: response.main.temp_min,
+		highTemp: response.main.temp_max,
+		pressure: response.main.pressure / 33.863886666667, // measured in hPa (100x Pa). Converted from hPa to inHg
+		humidity: response.main.humidity / 100, // Transformed to percent
+		visibility: response.visibility, // max is 10,000 meters
+		windSpeed: response.wind.speed, // miles/hr
+		windDirection: response.wind.deg,
+		windGust: response.wind.gust, // miles/hr
+		cloudiness: response.clouds.all / 100, // Transformed to percent
+		rainVolume: response.rain,
+		snowVolume: response.snow,
+		sunrise: luxon.DateTime.fromSeconds(response.sys.sunrise),
+		sunset: luxon.DateTime.fromSeconds(response.sys.sunset),
+		weather: response.weather,
+	};
+	return weather;
 }
+
+async function fetchForecast(latitude, longitude) {}
 
 async function fetchCoordinates(location) {
 	let response;
@@ -80,7 +103,8 @@ searchButton.addEventListener("click", async (event) => {
 	event.preventDefault();
 
 	let geoLocation;
-	let weatherObject;
+	let currentWeather;
+	let forecast;
 
 	try {
 		const location = parseSearchInput(inputField.value);
@@ -96,7 +120,10 @@ searchButton.addEventListener("click", async (event) => {
 	const { lat: latitude, lon: longitude, name, country, state } = geoLocation;
 
 	try {
-		weatherObject = await fetchWeather(latitude, longitude);
+		currentWeather = await fetchCurrentWeather(latitude, longitude);
+		console.log(currentWeather);
+		forecast = await fetchForecast(latitude, longitude);
+		console.log(forecast);
 	} catch (err) {
 		console.error(err);
 		return;
