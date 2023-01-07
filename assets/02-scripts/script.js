@@ -3,6 +3,8 @@ import { Weather, Geocoding } from "./lib/index.js";
 const inputField = document.getElementById("city-input");
 const searchButton = document.getElementById("search-button");
 const searchHistoryList = document.getElementById("search-history-list");
+const currentWeatherDate = document.getElementById("current-weather-date");
+const currentWeatherCity = document.getElementById("current-weather-title");
 
 const geocodingAPI = new Geocoding();
 const weatherAPI = new Weather();
@@ -77,13 +79,17 @@ searchButton.addEventListener("click", async (event) => {
 
 	try {
 		currentWeather = await fetchCurrentWeather(latitude, longitude);
-		console.log(currentWeather);
 		forecast = await fetchForecast(latitude, longitude);
-		console.log(forecast);
 	} catch (err) {
 		console.error(err);
 		return;
 	}
+
+	currentWeatherDate.innerText = currentWeather.dateTime.toLocaleString();
+	currentWeatherCity.innerText = name;
+
+	console.log(currentWeather);
+	console.log(geoLocation);
 
 	addToSearchHistory(0, 0, inputField.value);
 });

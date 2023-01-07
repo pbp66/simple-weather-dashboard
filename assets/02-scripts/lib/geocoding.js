@@ -31,7 +31,10 @@ class Geocoding extends API {
 		if (!(await response)) {
 			return null;
 		} else {
-			return response;
+			return await this.getLocationInformation(
+				response.lat,
+				response.lon
+			);
 		}
 	}
 
@@ -87,6 +90,19 @@ class Geocoding extends API {
 		} else {
 			return null;
 		}
+	}
+
+	async getLocationInformation(latitude, longitude) {
+		this.setSearchParameters({
+			lat: latitude,
+			lon: longitude,
+			limit: 1,
+			appid: this.getApiKey(),
+		});
+		this.url.pathname += "/reverse";
+		const response = await this.getCoordinates();
+		this.resetURL();
+		return response[0];
 	}
 }
 
