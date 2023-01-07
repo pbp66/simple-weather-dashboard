@@ -1,4 +1,4 @@
-import { Weather, Geocoding } from "./lib/index.js";
+import { Weather, Geocoding, stateNameToAbbreviation } from "./lib/index.js";
 
 const inputField = document.getElementById("city-input");
 const searchButton = document.getElementById("search-button");
@@ -86,7 +86,7 @@ searchButton.addEventListener("click", async (event) => {
 	}
 
 	currentWeatherDate.innerText = currentWeather.dateTime.toLocaleString();
-	currentWeatherCity.innerText = name;
+	currentWeatherCity.innerText = `${name}, ${stateNameToAbbreviation(state)}`;
 
 	console.log(currentWeather);
 	console.log(geoLocation);

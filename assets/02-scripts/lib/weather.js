@@ -21,8 +21,8 @@ class Weather extends API {
 		this.resetURL();
 		const weather = {
 			dateTime: luxon.DateTime.fromSeconds(response.dt),
-			icon: response.weather.icon,
-			weatherId: response.weather.id,
+			icon: response.weather[0].icon,
+			weatherId: response.weather[0].id,
 			temperature: response.main.temp,
 			feelsLikeTemp: response.main.feels_like,
 			lowTemp: response.main.temp_min,
