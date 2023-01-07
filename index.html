@@ -62,7 +62,12 @@
 							class="form-control border-primary"
 							id="city-input"
 						/>
-						<button class="btn btn-primary">Search</button>
+						<button
+							class="btn btn-primary"
+							id="search-button"
+						>
+							Search
+						</button>
 					</div>
 				</div>
 				<div
@@ -71,15 +76,40 @@
 				>
 					<ul
 						class="container-fluid justify-content-center search-history col"
+						id="search-history-list"
 					>
-						<li class="city text-center">City 1</li>
-						<li class="city text-center">City 2</li>
-						<li class="city text-center">City 3</li>
-						<li class="city text-center">City 4</li>
-						<li class="city text-center">City 5</li>
-						<li class="city text-center">City 6</li>
-						<li class="city text-center">City 7</li>
-						<li class="city text-center">City 8</li>
+						<li class="city text-center">
+							<button
+								class="previous-entry btn btn-secondary"
+								value="lat and lon of City 1"
+							>
+								City 1
+							</button>
+						</li>
+						<li class="city text-center">
+							<button
+								class="previous-entry btn btn-secondary"
+								value="lat and lon of City 2"
+							>
+								City 2
+							</button>
+						</li>
+						<li class="city text-center">
+							<button
+								class="previous-entry btn btn-secondary"
+								value="lat and lon of City 3"
+							>
+								City 3
+							</button>
+						</li>
+						<li class="city text-center">
+							<button
+								class="previous-entry btn btn-secondary"
+								value="lat and lon of City 4"
+							>
+								City 4
+							</button>
+						</li>
 					</ul>
 				</div>
 			</article>
@@ -110,7 +140,10 @@
 									City - Weather Emoji
 								</h4>
 							</div>
-							<p class="card-text">
+							<p
+								class="card-text"
+								id="current-weather-text"
+							>
 								<span> Temperature </span><br />
 								<span> Windspeed </span><br />
 								<span> Humidity </span><br />
@@ -188,5 +221,13 @@
 			<!-- Provide reference/link to source of background image and API resource -->
 		</footer>
 	</body>
-	<script href="./assets/02-scripts/script.js"></script>
+	<script
+		type="module"
+		src="./assets/02-scripts/script.js"
+	></script>
+	<script
+		type="module"
+		src="./assets/02-scripts/lib/index.js"
+	></script>
+	<script src="https://cdn.jsdelivr.net/npm/luxon@3.2.1/build/global/luxon.min.js"></script>
 </html>
