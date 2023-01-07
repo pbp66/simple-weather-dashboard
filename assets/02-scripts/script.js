@@ -5,6 +5,7 @@ const searchButton = document.getElementById("search-button");
 const searchHistoryList = document.getElementById("search-history-list");
 const currentWeatherDate = document.getElementById("current-weather-date");
 const currentWeatherCity = document.getElementById("current-weather-title");
+const currentWeatherText = document.getElementById("current-weather-text");
 
 const geocodingAPI = new Geocoding();
 const weatherAPI = new Weather();
@@ -87,6 +88,27 @@ searchButton.addEventListener("click", async (event) => {
 
 	currentWeatherDate.innerText = currentWeather.dateTime.toLocaleString();
 	currentWeatherCity.innerText = `${name}, ${stateNameToAbbreviation(state)}`;
+	const weatherIcon = document.createElement("img");
+	weatherIcon.src = `http://openweathermap.org/img/wn/${currentWeather.icon}@2x.png`;
+	currentWeatherCity.appendChild(weatherIcon);
+
+	let currentSpan;
+	const keySkipList = ["dateTime", "icon", "weatherId", "weather"];
+	for (const weatherObjectKey in currentWeather) {
+		if (keySkipList.includes(weatherObjectKey)) {
+			continue;
+		} else if (currentWeather[weatherObjectKey] instanceof Object) {
+			continue;
+		} else if (currentWeather[weatherObjectKey] == null) {
+			continue;
+		}
+		currentSpan = document.createElement("span");
+		currentSpan.id = weatherObjectKey;
+		currentSpan.innerText = `${weatherObjectKey}: ${currentWeather[weatherObjectKey]}`;
+
+		currentWeatherText.appendChild(currentSpan);
+		currentWeatherText.appendChild(document.createElement("br"));
+	}
 
 	console.log(currentWeather);
 	console.log(geoLocation);

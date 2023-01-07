@@ -28,12 +28,12 @@ class Weather extends API {
 			lowTemp: response.main.temp_min,
 			highTemp: response.main.temp_max,
 			pressure: response.main.pressure / 33.863886666667, // measured in hPa (100x Pa). Converted from hPa to inHg
-			humidity: response.main.humidity / 100, // Transformed to percent
+			humidity: response.main.humidity, // Measured in percent
 			visibility: response.visibility, // max is 10,000 meters
 			windSpeed: response.wind.speed, // miles/hr
 			windDirection: response.wind.deg,
 			windGust: response.wind.gust, // miles/hr
-			cloudiness: response.clouds.all / 100, // Transformed to percent
+			cloudiness: response.clouds.all, // Measured in percent
 			rainVolume: response.rain,
 			snowVolume: response.snow,
 			sunrise: luxon.DateTime.fromSeconds(response.sys.sunrise),
