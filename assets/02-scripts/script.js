@@ -27,7 +27,7 @@ async function fetchCurrentWeather(latitude, longitude) {
 }
 
 async function fetchForecast(latitude, longitude) {
-	return await weatherAPI.getCurrentWeather(latitude, longitude);
+	return await weatherAPI.getExtendedForecast(5, latitude, longitude);
 }
 
 async function fetchCoordinates(location) {
@@ -115,6 +115,8 @@ searchButton.addEventListener("click", async (event) => {
 		console.error(err);
 		return;
 	}
+
+	console.log(forecast); // TODO: Create method to parse through forecast data and update website content
 
 	addCurrentWeatherContent(currentWeather, geoLocation);
 	addForecastWeatherContent(forecast, geoLocation);

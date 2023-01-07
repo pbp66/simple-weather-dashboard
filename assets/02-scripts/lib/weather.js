@@ -48,10 +48,13 @@ class Weather extends API {
 			lat: latitude,
 			lon: longitude,
 			units: "imperial",
-			cnt: days,
+			cnt: days * 8, // data every 3 hours, 8 periods in 24 hours
 			appid: this.getApiKey(),
 		});
+
+		this.url.pathname += "/forecast";
 		const response = await this.getWeather();
+		this.resetURL();
 		// const weather {} = response;
 		return response;
 	}

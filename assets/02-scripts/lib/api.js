@@ -5,10 +5,12 @@
 class API {
 	#defaultURL;
 	#API_KEY;
-	constructor(baseURL, apiKey) {
+	constructor(baseURL, apiKey = null) {
 		this.url = new URL(baseURL);
 		this.setDefaultURL(baseURL);
-		this.setApiKey(apiKey);
+		if (apiKey) {
+			this.setApiKey(apiKey);
+		}
 	}
 
 	setDefaultURL(url) {
