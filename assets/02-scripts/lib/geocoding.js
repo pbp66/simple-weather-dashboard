@@ -8,6 +8,33 @@ class Geocoding extends API {
 		);
 	}
 
+	async findByLocation(location) {
+		let response;
+		if (location.zipCode == null) {
+			if (location.state == null) {
+				response = await this.getCoordinatesByLocationName(
+					location.city
+				);
+			} else {
+				response = await this.getCoordinatesByLocationName(
+					location.city,
+					"US",
+					location.state
+				);
+			}
+		} else {
+			response = await this.getCoordinatesByZipCode(
+				location.zipCode,
+				"US"
+			);
+		}
+		if (!(await response)) {
+			return null;
+		} else {
+			return response;
+		}
+	}
+
 	async getCoordinatesByLocationName(city, countryCode = null, state = null) {
 		if (state && countryCode) {
 			this.setSearchParameters({

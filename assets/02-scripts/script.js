@@ -23,33 +23,12 @@ async function fetchCurrentWeather(latitude, longitude) {
 	return await weatherAPI.getCurrentWeather(latitude, longitude);
 }
 
-async function fetchForecast(latitude, longitude) {}
+async function fetchForecast(latitude, longitude) {
+	return await weatherAPI.getCurrentWeather(latitude, longitude);
+}
 
 async function fetchCoordinates(location) {
-	let response;
-	if (location.zipCode == null) {
-		if (location.state == null) {
-			response = await geocodingAPI.getCoordinatesByLocationName(
-				location.city
-			);
-		} else {
-			response = await geocodingAPI.getCoordinatesByLocationName(
-				location.city,
-				"US",
-				location.state
-			);
-		}
-	} else {
-		response = await geocodingAPI.getCoordinatesByZipCode(
-			location.zipCode,
-			"US"
-		);
-	}
-	if (!(await response)) {
-		return null;
-	} else {
-		return response;
-	}
+	return await geocodingAPI.findByLocation(location);
 }
 
 function parseSearchInput(inputString) {
