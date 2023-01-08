@@ -61,7 +61,8 @@ function parseSearchInput(inputString) {
 function addCurrentWeatherContent(currentWeather, geoLocation) {
 	const { name, state } = geoLocation;
 
-	currentWeatherDate.innerText = currentWeather.dateTime.toLocaleString();
+	currentWeatherDate.innerText =
+		currentWeather.dateTime.toFormat("LL/dd/yyyy hh:mm a");
 	currentWeatherCity.innerText = `${name}, ${stateNameToAbbreviation(state)}`;
 	const weatherIcon = document.createElement("img");
 	weatherIcon.src = `http://openweathermap.org/img/wn/${currentWeather.icon}@2x.png`;
@@ -106,7 +107,7 @@ searchButton.addEventListener("click", async (event) => {
 		return;
 	}
 
-	const { lat: latitude, lon: longitude } = geoLocation;
+	const { lat: latitude, lon: longitude, name, state } = geoLocation;
 
 	try {
 		currentWeather = await fetchCurrentWeather(latitude, longitude);
@@ -120,5 +121,9 @@ searchButton.addEventListener("click", async (event) => {
 
 	addCurrentWeatherContent(currentWeather, geoLocation);
 	addForecastWeatherContent(forecast, geoLocation);
-	addToSearchHistory(0, 0, inputField.value);
+	addToSearchHistory(
+		latitude,
+		longitude,
+		`${name}, ${stateNameToAbbreviation(state)}`
+	);
 });
