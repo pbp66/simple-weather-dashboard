@@ -117,8 +117,6 @@ searchButton.addEventListener("click", async (event) => {
 		return;
 	}
 
-	console.log(forecast); // TODO: Create method to parse through forecast data and update website content
-
 	addCurrentWeatherContent(currentWeather, geoLocation);
 	addForecastWeatherContent(forecast, geoLocation);
 	addToSearchHistory(
