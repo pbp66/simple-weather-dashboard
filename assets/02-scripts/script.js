@@ -6,6 +6,7 @@ const searchHistoryList = document.getElementById("search-history-list");
 const currentWeatherDate = document.getElementById("current-weather-date");
 const currentWeatherCity = document.getElementById("current-weather-title");
 const currentWeatherText = document.getElementById("current-weather-text");
+const forecastCards = document.getElementById("forecast-cards-container");
 
 const geocodingAPI = new Geocoding();
 const weatherAPI = new Weather();
@@ -61,7 +62,8 @@ function parseSearchInput(inputString) {
 function addCurrentWeatherContent(currentWeather, geoLocation) {
 	const { name, state } = geoLocation;
 
-	currentWeatherDate.innerText = currentWeather.dateTime.toLocaleString();
+	currentWeatherDate.innerText =
+		currentWeather.dateTime.toFormat("LL/dd/yyyy hh:mm a");
 	currentWeatherCity.innerText = `${name}, ${stateNameToAbbreviation(state)}`;
 	const weatherIcon = document.createElement("img");
 	weatherIcon.src = `http://openweathermap.org/img/wn/${currentWeather.icon}@2x.png`;
@@ -86,7 +88,50 @@ function addCurrentWeatherContent(currentWeather, geoLocation) {
 	}
 }
 
-function addForecastWeatherContent(forecastWeather, geoLocation) {}
+function addForecastWeatherContent(forecastWeather, geoLocation) {
+	for (let i = 0; i < forecastWeather.length; i++) {
+		// Default Card Creation
+		let card = document.createElement("div");
+		card.classList.add(
+			"card",
+			"col",
+			"forecast-card",
+			"bg-dark",
+			"text-light"
+		);
+		card.id = forecastWeather[i].dateTime.toFormat("yyyy/LL/dd");
+
+		// Adding card title
+		let cardTitle = document.createElement("h5");
+		cardTitle.innerText =
+			forecastWeather[i].dateTime.toFormat("LL/dd/yyyy");
+		card.appendChild(cardTitle);
+
+		// Adding card content
+		let content = document.createElement("p");
+		let highTemp = document.createElement("span");
+		highTemp.innerText = forecastWeather[i].highTemp;
+		content.appendChild(highTemp);
+		content.appendChild(document.createElement("br"));
+
+		let lowTemp = document.createElement("span");
+		lowTemp.innerText = forecastWeather[i].lowTemp;
+		content.appendChild(lowTemp);
+		content.appendChild(document.createElement("br"));
+
+		let feelsLikeTemp = document.createElement("span");
+		feelsLikeTemp.innerText = forecastWeather[i].feelsLikeTemp;
+		content.appendChild(feelsLikeTemp);
+		content.appendChild(document.createElement("br"));
+
+		let humidity = document.createElement("span");
+		humidity.innerText = forecastWeather[i].humidity;
+		content.appendChild(humidity);
+
+		card.appendChild(content);
+		forecastCards.appendChild(card);
+	}
+}
 
 searchButton.addEventListener("click", async (event) => {
 	event.preventDefault();
@@ -106,7 +151,7 @@ searchButton.addEventListener("click", async (event) => {
 		return;
 	}
 
-	const { lat: latitude, lon: longitude } = geoLocation;
+	const { lat: latitude, lon: longitude, name, state } = geoLocation;
 
 	try {
 		currentWeather = await fetchCurrentWeather(latitude, longitude);
@@ -116,9 +161,11 @@ searchButton.addEventListener("click", async (event) => {
 		return;
 	}
 
-	console.log(forecast); // TODO: Create method to parse through forecast data and update website content
-
 	addCurrentWeatherContent(currentWeather, geoLocation);
 	addForecastWeatherContent(forecast, geoLocation);
-	addToSearchHistory(0, 0, inputField.value);
+	addToSearchHistory(
+		latitude,
+		longitude,
+		`${name}, ${stateNameToAbbreviation(state)}`
+	);
 });
