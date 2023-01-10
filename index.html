@@ -40,7 +40,10 @@
 				Weather Dashboard
 			</h1>
 		</header>
-		<main class="container-fluid row">
+		<main
+			class="container-fluid row"
+			id="main"
+		>
 			<article
 				class="container-fluid ms-3 col-6"
 				id="search-container"
@@ -78,56 +81,6 @@
 						class="container-fluid justify-content-center search-history col"
 						id="search-history-list"
 					></ul>
-				</div>
-			</article>
-			<article
-				class="container-fluid col-6"
-				id="weather"
-			>
-				<div
-					class="container-fluid"
-					id="current-weather"
-				>
-					<div
-						class="card bg-light-custom"
-						id="current-weather-card"
-					>
-						<div class="card-body current-weather-card">
-							<div class="container-fluid title-bar">
-								<h6
-									class="card-subtitle"
-									id="current-weather-date"
-								>
-									MM/DD/YYYY
-								</h6>
-								<h4
-									class="card-title"
-									id="current-weather-title"
-								>
-									City - Weather Emoji
-								</h4>
-							</div>
-							<p
-								class="card-text"
-								id="current-weather-text"
-							>
-								<span> Temperature </span><br />
-								<span> Windspeed </span><br />
-								<span> Humidity </span><br />
-								<span> Other Weather conditions </span><br />
-							</p>
-						</div>
-					</div>
-				</div>
-				<div
-					class="container-fluid bg-light-custom"
-					id="forecast-5-day"
-				>
-					<h3>5-Day Forecast:</h3>
-					<div
-						class="cards row"
-						id="forecast-cards-container"
-					></div>
 				</div>
 			</article>
 		</main>

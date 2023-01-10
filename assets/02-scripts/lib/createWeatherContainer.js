@@ -10,6 +10,8 @@ export default function createWeatherContainer() {
 	currentWeather.appendChild(currentWeatherCard);
 
 	const weather = document.createElement("article");
+	weather.classList.add("container-fluid", "col-6");
+	weather.id = "weather";
 	weather.appendChild(currentWeather);
 	weather.appendChild(createForecastContainer());
 
