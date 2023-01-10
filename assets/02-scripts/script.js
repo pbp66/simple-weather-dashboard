@@ -1,5 +1,4 @@
 // TODO: Hide Current weather and forecast when no data is displayed.
-// TODO: Add hyperlink to previous history button.
 // TODO: Change background based on weather type.
 // TODO: Final stylistic changes.
 
@@ -15,17 +14,31 @@ const forecastCards = document.getElementById("forecast-cards-container");
 
 const geocodingAPI = new Geocoding();
 const weatherAPI = new Weather();
+const searchHistory = [];
 
 function addToSearchHistory(latitude, longitude, location) {
-	const buttonElement = document.createElement("button");
-	buttonElement.classList.add("previous-entry", "btn", "btn-secondary");
-	buttonElement.value = `{lat: ${latitude}, lon: ${longitude}}`;
-	buttonElement.innerText = location;
+	if (!searchHistory.includes(location)) {
+		// Create previous search button entry
+		const buttonElement = document.createElement("button");
+		buttonElement.classList.add("previous-entry", "btn", "btn-secondary");
+		buttonElement.value = JSON.stringify({ lat: latitude, lon: longitude });
+		buttonElement.innerText = location;
+		buttonElement.addEventListener("click", search);
 
-	const listItem = document.createElement("li");
-	listItem.classList.add("city", "text-center");
-	listItem.appendChild(buttonElement);
-	searchHistoryList.append(listItem);
+		// Add search button to the list
+		const listItem = document.createElement("li");
+		listItem.classList.add("city", "text-center");
+		listItem.appendChild(buttonElement);
+
+		// Add list item to the list
+		searchHistoryList.append(listItem);
+
+		// Set the max history limit to 10 entries. If more than 10 entires, remove the oldest entry
+		if (searchHistory.length >= 10) {
+			searchHistory.shift();
+		}
+		searchHistory.push(location);
+	}
 }
 
 async function fetchCurrentWeather(latitude, longitude) {
@@ -149,15 +162,23 @@ async function search(event) {
 	let currentWeather;
 	let forecast;
 
-	try {
-		const location = parseSearchInput(inputField.value);
-		geoLocation = await fetchCoordinates(location);
-		if (!geoLocation) {
-			throw new Error("Bad Input Error");
+	if (event.target.id === "search-button") {
+		try {
+			const location = parseSearchInput(inputField.value);
+			geoLocation = await fetchCoordinates(location);
+			if (!geoLocation) {
+				throw new Error("Bad Input Error");
+			}
+		} catch (err) {
+			alert("Improper input");
+			return;
 		}
-	} catch (err) {
-		alert("Improper input");
-		return;
+	} else if (event.target.classList.contains("previous-entry")) {
+		const coordinates = JSON.parse(event.target.value);
+		geoLocation = await geocodingAPI.getLocationInformation(
+			coordinates.lat,
+			coordinates.lon
+		);
 	}
 
 	const { lat: latitude, lon: longitude, name, state } = geoLocation;
@@ -179,4 +200,4 @@ async function search(event) {
 	);
 }
 
-searchButton.addEventListener("click", search);
+searchButton.addEventListener("click", await search);
