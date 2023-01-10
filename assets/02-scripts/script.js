@@ -142,7 +142,7 @@ function addForecastWeatherContent(forecastWeather, geoLocation) {
 	}
 }
 
-searchButton.addEventListener("click", async (event) => {
+async function search(event) {
 	event.preventDefault();
 
 	let geoLocation;
@@ -177,4 +177,6 @@ searchButton.addEventListener("click", async (event) => {
 		longitude,
 		`${name}, ${stateNameToAbbreviation(state)}`
 	);
-});
+}
+
+searchButton.addEventListener("click", search);
