@@ -2,18 +2,12 @@ import stateNameToAbbreviation from "./states.js";
 import createWeatherContainer from "./createWeatherContainer.js";
 
 function clearCurrentWeatherContent() {
-	let currentWeatherDate, currentWeatherCity, currentWeatherText;
-	const currentWeatherContainer = document.getElementById("current-weather");
-	if (!currentWeatherContainer) {
-		createWeatherContainer();
-	} else {
-		currentWeatherDate = document.getElementById("current-weather-date");
-		currentWeatherCity = document.getElementById("current-weather-title");
-		currentWeatherText = document.getElementById("current-weather-text");
-		currentWeatherDate.innerHTML = "";
-		currentWeatherCity.innerHTML = "";
-		currentWeatherText.innerHTML = "";
-	}
+	let currentWeatherDate = document.getElementById("current-weather-date");
+	let currentWeatherCity = document.getElementById("current-weather-title");
+	let currentWeatherText = document.getElementById("current-weather-text");
+	currentWeatherDate.innerHTML = "";
+	currentWeatherCity.innerHTML = "";
+	currentWeatherText.innerHTML = "";
 }
 
 const searchHistory = [];
@@ -93,17 +87,18 @@ function addForecastWeatherContent(forecastWeather, geoLocation) {
 function addCurrentWeatherContent(currentWeather, geoLocation) {
 	let currentWeatherDate, currentWeatherCity, currentWeatherText;
 	const { name, state } = geoLocation;
-	const currentWeatherContainer = document.getElementById("current-weather");
+	let currentWeatherContainer = document.getElementById("current-weather");
 	if (!currentWeatherContainer) {
-		createWeatherContainer();
-	} else {
-		currentWeatherDate = document.getElementById("current-weather-date");
-		currentWeatherCity = document.getElementById("current-weather-title");
-		currentWeatherText = document.getElementById("current-weather-text");
+		const main = document.getElementById("main");
+		main.appendChild(createWeatherContainer());
 	}
 
-	// Update Current Weather Header
+	currentWeatherDate = document.getElementById("current-weather-date");
+	currentWeatherCity = document.getElementById("current-weather-title");
+	currentWeatherText = document.getElementById("current-weather-text");
 	clearCurrentWeatherContent();
+
+	// Update Current Weather Header
 	currentWeatherDate.innerText =
 		currentWeather.dateTime.toFormat("LL/dd/yyyy hh:mm a");
 	currentWeatherCity.innerText = `${name}, ${stateNameToAbbreviation(state)}`;

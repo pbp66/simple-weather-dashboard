@@ -44,7 +44,7 @@ function createCardTitle() {
 function createCardText() {
 	const cardText = document.createElement("p");
 	cardText.classList.add("card-text");
-	cardText.id = "current-weather.text";
+	cardText.id = "current-weather-text";
 	return cardText;
 }
 
@@ -58,7 +58,8 @@ function createForecastContainer() {
 
 	const forecastContainer = document.createElement("div");
 	forecastContainer.classList.add("container-fluid", "bg-light-custom");
-	forecastContainer.appendChild(forecastCardTitle, forecastCardContainer);
+	forecastContainer.appendChild(forecastCardTitle);
+	forecastContainer.appendChild(forecastCardContainer);
 
 	return forecastContainer;
 }
