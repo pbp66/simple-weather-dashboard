@@ -54,13 +54,8 @@ function createForecastContainer() {
 	const forecastCardContainer = document.createElement("div");
 	forecastCardContainer.classList.add("cards", "row");
 	forecastCardContainer.id = "forecast-cards-container";
-
-	const forecastCardTitle = document.createElement("h3");
-	forecastCardTitle.innerText = "5-Day Forecast:";
-
 	const forecastContainer = document.createElement("div");
-	forecastContainer.classList.add("container-fluid", "bg-light-custom");
-	forecastContainer.appendChild(forecastCardTitle);
+	forecastContainer.classList.add("container-fluid");
 	forecastContainer.appendChild(forecastCardContainer);
 
 	return forecastContainer;

@@ -60,42 +60,75 @@ class Weather extends API {
 		const response = await this.getWeather();
 		this.resetURL();
 
-		let weather = [
-			response.list[7],
-			response.list[15],
-			response.list[23],
-			response.list[31],
-			response.list[39],
-		];
+		// Convert weather data to presentable data
+		const weather = {};
+		let pressureSum = 0,
+			humiditySum = 0,
+			counter = 1,
+			highTemp = -212,
+			lowTemp = 212,
+			date,
+			time,
+			meridiem,
+			icon = "";
+		let prevDate = luxon.DateTime.fromSeconds(response.list[0].dt).toFormat(
+			"LL/dd/yyyy"
+		);
+		let lastItem = response.list.slice(-1);
+		for (const item of response.list) {
+			[date, time, meridiem] = luxon.DateTime.fromSeconds(item.dt)
+				.toFormat("LL/dd/yyyy hh:mm a")
+				.split(" ");
 
-		weather = weather.map((element) => {
-			return {
-				dateTime: luxon.DateTime.fromSeconds(element.dt),
-				icon: element.weather[0].icon,
-				weatherId: element.weather[0].id,
-				temperature: element.main.temp,
-				feelsLikeTemp: element.main.feels_like,
-				lowTemp: element.main.temp_min,
-				highTemp: element.main.temp_max,
-				pressure: element.main.pressure / 33.863886666667, // measured in hPa (100x Pa). Converted from hPa to inHg
-				humidity: element.main.humidity, // Measured in percent
-				visibility: element.visibility, // max is 10,000 meters
-				windSpeed: element.wind.speed, // miles/hr
-				windDirection: element.wind.deg,
-				windGust: element.wind.gust ? element.wind.gust : 0, // miles/hr
-				cloudiness: element.clouds.all, // Measured in percent
-				rainVolume: element.rain ? element.rain : 0,
-				snowVolume: element.snow ? element.snow : 0,
-				sunrise: element.sys.sunrise
-					? luxon.DateTime.fromSeconds(element.sys.sunrise)
-					: null,
-				sunset: element.sys.sunset
-					? luxon.DateTime.fromSeconds(element.sys.sunset)
-					: null,
-				weather: element.weather, // Full weather output if needed
-			};
-		});
+			let hour = time.split(":")[0];
+			if (hour < 4 && meridiem.toLowerCase() === "pm") {
+				icon = item.weather[0].icon;
+			}
 
+			// Only update the current values if the date hasn't changed
+			if (date === prevDate) {
+				if (Number(item.main.temp) < Number(lowTemp)) {
+					lowTemp = item.main.temp;
+				}
+				if (Number(item.main.temp) > Number(highTemp)) {
+					highTemp = item.main.temp;
+				}
+				pressureSum += Number(item.main.pressure);
+				humiditySum += Number(item.main.humidity);
+			}
+
+			// Check if this is the last entry to handle the addition of the last object
+			if (item.dt == lastItem[0].dt) {
+				weather[date] = {
+					icon: icon,
+					lowTemp: Math.round(lowTemp, 0),
+					highTemp: Math.round(highTemp, 0),
+					pressure: Math.round(pressureSum / ++counter, 0),
+					humidity: Math.round(humiditySum / ++counter, 0),
+				};
+
+				break;
+
+				// Detect a change in date, store current values, then reset them
+			} else if (date !== prevDate) {
+				weather[prevDate] = {
+					icon: item.weather[0].icon,
+					lowTemp: Math.round(lowTemp, 0),
+					highTemp: Math.round(highTemp, 0),
+					pressure: Math.round(pressureSum / counter, 0),
+					humidity: Math.round(humiditySum / counter, 0),
+				};
+
+				lowTemp = Number(item.main.temp);
+				highTemp = Number(item.main.temp);
+				pressureSum = Number(item.main.pressure);
+				humiditySum = Number(item.main.humidity);
+				counter = 0;
+			}
+
+			counter++;
+			prevDate = date;
+		}
 		return weather;
 	}
 

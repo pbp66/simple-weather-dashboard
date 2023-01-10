@@ -10,73 +10,44 @@ function clearCurrentWeatherContent() {
 	currentWeatherText.innerHTML = "";
 }
 
-const searchHistory = [];
-const searchHistoryList = document.getElementById("search-history-list");
-function addToSearchHistory(latitude, longitude, location) {
-	if (!searchHistory.includes(location)) {
-		// Create previous search button entry
-		const buttonElement = document.createElement("button");
-		buttonElement.classList.add("previous-entry", "btn", "btn-secondary");
-		buttonElement.value = JSON.stringify({ lat: latitude, lon: longitude });
-		buttonElement.innerText = location;
-		buttonElement.addEventListener("click", search);
-
-		// Add search button to the list
-		const listItem = document.createElement("li");
-		listItem.classList.add("city", "text-center");
-		listItem.appendChild(buttonElement);
-
-		// Add list item to the list
-		searchHistoryList.append(listItem);
-
-		// Set the max history limit to 10 entries. If more than 10 entires, remove the oldest entry
-		if (searchHistory.length >= 10) {
-			searchHistory.shift();
-		}
-		searchHistory.push(location);
-	}
-}
-
 function addForecastWeatherContent(forecastWeather, geoLocation) {
 	const forecastCards = document.getElementById("forecast-cards-container");
 	forecastCards.innerHTML = "";
-	for (let i = 0; i < forecastWeather.length; i++) {
+	for (const weather in forecastWeather) {
 		// Default Card Creation
 		let card = document.createElement("div");
 		card.classList.add(
 			"card",
 			"col",
 			"forecast-card",
-			"bg-dark",
+			//"bg-dark",
+			"bg-secondary",
 			"text-light"
 		);
-		card.id = forecastWeather[i].dateTime.toFormat("yyyy/LL/dd");
+		card.id = weather;
 
 		// Adding card title
+		const weatherIcon = document.createElement("img");
+		weatherIcon.src = `http://openweathermap.org/img/wn/${forecastWeather[weather].icon}@2x.png`;
 		let cardTitle = document.createElement("h5");
-		cardTitle.innerText =
-			forecastWeather[i].dateTime.toFormat("LL/dd/yyyy");
+		cardTitle.innerText = weather;
+		cardTitle.appendChild(weatherIcon);
 		card.appendChild(cardTitle);
 
 		// Adding card content
 		let content = document.createElement("p");
-		let highTemp = document.createElement("span");
-		highTemp.innerText = forecastWeather[i].highTemp;
-		content.appendChild(highTemp);
+		let temp = document.createElement("span");
+		temp.innerText = `${forecastWeather[weather].highTemp}\u2109 / ${forecastWeather[weather].lowTemp}\u2109`;
+		content.appendChild(temp);
 		content.appendChild(document.createElement("br"));
 
-		let lowTemp = document.createElement("span");
-		lowTemp.innerText = forecastWeather[i].lowTemp;
-		content.appendChild(lowTemp);
-		content.appendChild(document.createElement("br"));
-
-		let feelsLikeTemp = document.createElement("span");
-		feelsLikeTemp.innerText = forecastWeather[i].feelsLikeTemp;
-		content.appendChild(feelsLikeTemp);
+		let pressure = document.createElement("span");
+		pressure.innerText = `${forecastWeather[weather].pressure} inHg`;
+		content.appendChild(pressure);
 		content.appendChild(document.createElement("br"));
 
 		let humidity = document.createElement("span");
-		humidity.innerText = forecastWeather[i].humidity;
+		humidity.innerText = `${forecastWeather[weather].humidity}% Humidity`;
 		content.appendChild(humidity);
 
 		card.appendChild(content);
@@ -127,7 +98,6 @@ function addCurrentWeatherContent(currentWeather, geoLocation) {
 
 export {
 	clearCurrentWeatherContent,
-	addToSearchHistory,
 	createWeatherContainer,
 	addForecastWeatherContent,
 	addCurrentWeatherContent,

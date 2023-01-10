@@ -3,7 +3,6 @@ import Geocoding from "./geocoding.js";
 import stateNameToAbbreviation from "./states.js";
 import {
 	clearCurrentWeatherContent,
-	addToSearchHistory,
 	createWeatherContainer,
 	addForecastWeatherContent,
 	addCurrentWeatherContent,
@@ -14,7 +13,6 @@ export {
 	Geocoding,
 	stateNameToAbbreviation,
 	clearCurrentWeatherContent,
-	addToSearchHistory,
 	createWeatherContainer,
 	addForecastWeatherContent,
 	addCurrentWeatherContent,

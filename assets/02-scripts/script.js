@@ -1,4 +1,3 @@
-// TODO: Hide Current weather and forecast when no data is displayed.
 // TODO: Change background based on weather type.
 // TODO: Final stylistic changes.
 
@@ -6,7 +5,6 @@ import {
 	Weather,
 	Geocoding,
 	stateNameToAbbreviation,
-	addToSearchHistory,
 	addForecastWeatherContent,
 	addCurrentWeatherContent,
 } from "./lib/index.js";
@@ -16,6 +14,33 @@ const searchButton = document.getElementById("search-button");
 
 const geocodingAPI = new Geocoding();
 const weatherAPI = new Weather();
+
+const searchHistory = [];
+const searchHistoryList = document.getElementById("search-history-list");
+function addToSearchHistory(latitude, longitude, location) {
+	if (!searchHistory.includes(location)) {
+		// Create previous search button entry
+		const buttonElement = document.createElement("button");
+		buttonElement.classList.add("previous-entry", "btn", "btn-secondary");
+		buttonElement.value = JSON.stringify({ lat: latitude, lon: longitude });
+		buttonElement.innerText = location;
+		buttonElement.addEventListener("click", search);
+
+		// Add search button to the list
+		const listItem = document.createElement("li");
+		listItem.classList.add("city", "text-center");
+		listItem.appendChild(buttonElement);
+
+		// Add list item to the list
+		searchHistoryList.append(listItem);
+
+		// Set the max history limit to 10 entries. If more than 10 entires, remove the oldest entry
+		if (searchHistory.length >= 10) {
+			searchHistory.shift();
+		}
+		searchHistory.push(location);
+	}
+}
 
 async function fetchCurrentWeather(latitude, longitude) {
 	return await weatherAPI.getCurrentWeather(latitude, longitude);
