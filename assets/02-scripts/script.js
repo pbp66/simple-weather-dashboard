@@ -1,3 +1,8 @@
+// TODO: Hide Current weather and forecast when no data is displayed.
+// TODO: Add hyperlink to previous history button.
+// TODO: Change background based on weather type.
+// TODO: Final stylistic changes.
+
 import { Weather, Geocoding, stateNameToAbbreviation } from "./lib/index.js";
 
 const inputField = document.getElementById("city-input");
@@ -15,7 +20,7 @@ function addToSearchHistory(latitude, longitude, location) {
 	const buttonElement = document.createElement("button");
 	buttonElement.classList.add("previous-entry", "btn", "btn-secondary");
 	buttonElement.value = `{lat: ${latitude}, lon: ${longitude}}`;
-	buttonElement.innerText = location; // TODO: Change to City Name
+	buttonElement.innerText = location;
 
 	const listItem = document.createElement("li");
 	listItem.classList.add("city", "text-center");
@@ -60,6 +65,9 @@ function parseSearchInput(inputString) {
 }
 
 function addCurrentWeatherContent(currentWeather, geoLocation) {
+	currentWeatherDate.innerHTML = "";
+	currentWeatherCity.innerHTML = "";
+	currentWeatherText.innerHTML = "";
 	const { name, state } = geoLocation;
 
 	currentWeatherDate.innerText =
@@ -89,6 +97,7 @@ function addCurrentWeatherContent(currentWeather, geoLocation) {
 }
 
 function addForecastWeatherContent(forecastWeather, geoLocation) {
+	forecastCards.innerHTML = "";
 	for (let i = 0; i < forecastWeather.length; i++) {
 		// Default Card Creation
 		let card = document.createElement("div");
