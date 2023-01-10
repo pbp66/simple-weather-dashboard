@@ -1,9 +1,23 @@
+import stateNameToAbbreviation from "./states.js";
+import createWeatherContainer from "./createWeatherContainer.js";
+
 function clearCurrentWeatherContent() {
-	currentWeatherDate.innerHTML = "";
-	currentWeatherCity.innerHTML = "";
-	currentWeatherText.innerHTML = "";
+	let currentWeatherDate, currentWeatherCity, currentWeatherText;
+	const currentWeatherContainer = document.getElementById("current-weather");
+	if (!currentWeatherContainer) {
+		createWeatherContainer();
+	} else {
+		currentWeatherDate = document.getElementById("current-weather-date");
+		currentWeatherCity = document.getElementById("current-weather-title");
+		currentWeatherText = document.getElementById("current-weather-text");
+		currentWeatherDate.innerHTML = "";
+		currentWeatherCity.innerHTML = "";
+		currentWeatherText.innerHTML = "";
+	}
 }
 
+const searchHistory = [];
+const searchHistoryList = document.getElementById("search-history-list");
 function addToSearchHistory(latitude, longitude, location) {
 	if (!searchHistory.includes(location)) {
 		// Create previous search button entry
@@ -29,26 +43,8 @@ function addToSearchHistory(latitude, longitude, location) {
 	}
 }
 
-function createWeatherContainer() {
-	let weatherElements = {};
-
-	const weather = document.createElement("article");
-	const currentWeather = document.createElement("div");
-	const currentWeatherCard = document.createElement("div");
-	const cardBody = document.createElement("div");
-	const titleBar = document.createElement("div");
-	const forecastContainer = document.createElement("div");
-	const forecastCardContainer = document.createElement("div");
-
-	const cardSubtitle= document.createElement("h6");
-	const cardTitle= document.createElement("h4");
-	const cardText= document.createElement("p");
-	const forecastCardTitle= document.createElement("h3");
-
-	return weatherElements;
-}
-
 function addForecastWeatherContent(forecastWeather, geoLocation) {
+	const forecastCards = document.getElementById("forecast-cards-container");
 	forecastCards.innerHTML = "";
 	for (let i = 0; i < forecastWeather.length; i++) {
 		// Default Card Creation
