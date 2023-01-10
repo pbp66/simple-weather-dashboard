@@ -1,26 +1,45 @@
-import { Weather, Geocoding, stateNameToAbbreviation } from "./lib/index.js";
+// TODO: Change background based on weather type.
+// TODO: Final stylistic changes.
+
+import {
+	Weather,
+	Geocoding,
+	stateNameToAbbreviation,
+	addForecastWeatherContent,
+	addCurrentWeatherContent,
+} from "./lib/index.js";
 
 const inputField = document.getElementById("city-input");
 const searchButton = document.getElementById("search-button");
-const searchHistoryList = document.getElementById("search-history-list");
-const currentWeatherDate = document.getElementById("current-weather-date");
-const currentWeatherCity = document.getElementById("current-weather-title");
-const currentWeatherText = document.getElementById("current-weather-text");
-const forecastCards = document.getElementById("forecast-cards-container");
 
 const geocodingAPI = new Geocoding();
 const weatherAPI = new Weather();
 
+const searchHistory = [];
+const searchHistoryList = document.getElementById("search-history-list");
 function addToSearchHistory(latitude, longitude, location) {
-	const buttonElement = document.createElement("button");
-	buttonElement.classList.add("previous-entry", "btn", "btn-secondary");
-	buttonElement.value = `{lat: ${latitude}, lon: ${longitude}}`;
-	buttonElement.innerText = location; // TODO: Change to City Name
+	if (!searchHistory.includes(location)) {
+		// Create previous search button entry
+		const buttonElement = document.createElement("button");
+		buttonElement.classList.add("previous-entry", "btn", "btn-secondary");
+		buttonElement.value = JSON.stringify({ lat: latitude, lon: longitude });
+		buttonElement.innerText = location;
+		buttonElement.addEventListener("click", search);
 
-	const listItem = document.createElement("li");
-	listItem.classList.add("city", "text-center");
-	listItem.appendChild(buttonElement);
-	searchHistoryList.append(listItem);
+		// Add search button to the list
+		const listItem = document.createElement("li");
+		listItem.classList.add("city", "text-center");
+		listItem.appendChild(buttonElement);
+
+		// Add list item to the list
+		searchHistoryList.append(listItem);
+
+		// Set the max history limit to 10 entries. If more than 10 entires, remove the oldest entry
+		if (searchHistory.length >= 10) {
+			searchHistory.shift();
+		}
+		searchHistory.push(location);
+	}
 }
 
 async function fetchCurrentWeather(latitude, longitude) {
@@ -59,96 +78,35 @@ function parseSearchInput(inputString) {
 	return location;
 }
 
-function addCurrentWeatherContent(currentWeather, geoLocation) {
-	const { name, state } = geoLocation;
-
-	currentWeatherDate.innerText =
-		currentWeather.dateTime.toFormat("LL/dd/yyyy hh:mm a");
-	currentWeatherCity.innerText = `${name}, ${stateNameToAbbreviation(state)}`;
-	const weatherIcon = document.createElement("img");
-	weatherIcon.src = `http://openweathermap.org/img/wn/${currentWeather.icon}@2x.png`;
-	currentWeatherCity.appendChild(weatherIcon);
-
-	let currentSpan;
-	const keySkipList = ["dateTime", "icon", "weatherId", "weather"];
-	for (const weatherObjectKey in currentWeather) {
-		if (keySkipList.includes(weatherObjectKey)) {
-			continue;
-		} else if (currentWeather[weatherObjectKey] instanceof Object) {
-			continue;
-		} else if (currentWeather[weatherObjectKey] == null) {
-			continue;
-		}
-		currentSpan = document.createElement("span");
-		currentSpan.id = weatherObjectKey;
-		currentSpan.innerText = `${weatherObjectKey}: ${currentWeather[weatherObjectKey]}`;
-
-		currentWeatherText.appendChild(currentSpan);
-		currentWeatherText.appendChild(document.createElement("br"));
-	}
-}
-
-function addForecastWeatherContent(forecastWeather, geoLocation) {
-	for (let i = 0; i < forecastWeather.length; i++) {
-		// Default Card Creation
-		let card = document.createElement("div");
-		card.classList.add(
-			"card",
-			"col",
-			"forecast-card",
-			"bg-dark",
-			"text-light"
-		);
-		card.id = forecastWeather[i].dateTime.toFormat("yyyy/LL/dd");
-
-		// Adding card title
-		let cardTitle = document.createElement("h5");
-		cardTitle.innerText =
-			forecastWeather[i].dateTime.toFormat("LL/dd/yyyy");
-		card.appendChild(cardTitle);
-
-		// Adding card content
-		let content = document.createElement("p");
-		let highTemp = document.createElement("span");
-		highTemp.innerText = forecastWeather[i].highTemp;
-		content.appendChild(highTemp);
-		content.appendChild(document.createElement("br"));
-
-		let lowTemp = document.createElement("span");
-		lowTemp.innerText = forecastWeather[i].lowTemp;
-		content.appendChild(lowTemp);
-		content.appendChild(document.createElement("br"));
-
-		let feelsLikeTemp = document.createElement("span");
-		feelsLikeTemp.innerText = forecastWeather[i].feelsLikeTemp;
-		content.appendChild(feelsLikeTemp);
-		content.appendChild(document.createElement("br"));
-
-		let humidity = document.createElement("span");
-		humidity.innerText = forecastWeather[i].humidity;
-		content.appendChild(humidity);
-
-		card.appendChild(content);
-		forecastCards.appendChild(card);
-	}
-}
-
-searchButton.addEventListener("click", async (event) => {
+async function search(event) {
 	event.preventDefault();
 
 	let geoLocation;
 	let currentWeather;
 	let forecast;
 
-	try {
-		const location = parseSearchInput(inputField.value);
-		geoLocation = await fetchCoordinates(location);
-		if (!geoLocation) {
-			throw new Error("Bad Input Error");
+	// Handle behavior for when the search button is clicked vs a previous entry
+	if (event.target.id === "search-button") {
+		try {
+			const location = parseSearchInput(inputField.value);
+			geoLocation = await fetchCoordinates(location);
+			if (!geoLocation) {
+				throw new Error("Bad Input Error");
+			}
+		} catch (err) {
+			alert("Improper input");
+			return;
 		}
-	} catch (err) {
-		alert("Improper input");
-		return;
+	} else if (event.target.classList.contains("previous-entry")) {
+		const coordinates = JSON.parse(event.target.value);
+		geoLocation = await geocodingAPI.getLocationInformation(
+			coordinates.lat,
+			coordinates.lon
+		);
+	} else {
+		console.error(
+			"The clicked element does not have a proper class or id associated with it to handle click events"
+		);
 	}
 
 	const { lat: latitude, lon: longitude, name, state } = geoLocation;
@@ -168,4 +126,6 @@ searchButton.addEventListener("click", async (event) => {
 		longitude,
 		`${name}, ${stateNameToAbbreviation(state)}`
 	);
-});
+}
+
+searchButton.addEventListener("click", search);
