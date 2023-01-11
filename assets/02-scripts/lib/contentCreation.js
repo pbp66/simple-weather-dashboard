@@ -1,16 +1,34 @@
 import stateNameToAbbreviation from "./states.js";
-import createWeatherContainer from "./createWeatherContainer.js";
+import {
+	createWeatherContainer,
+	updateCardText,
+} from "./createWeatherContainer.js";
 
 function clearCurrentWeatherContent() {
-	let currentWeatherDate = document.getElementById("current-weather-date");
-	let currentWeatherCity = document.getElementById("current-weather-title");
-	let currentWeatherText = document.getElementById("current-weather-text");
-	currentWeatherDate.innerHTML = "";
-	currentWeatherCity.innerHTML = "";
-	currentWeatherText.innerHTML = "";
+	const elementIds = [
+		"current-weather-date",
+		"current-weather-title",
+		"current-temperature",
+		"weather-description",
+		"feels-like",
+		"high-low",
+		"wind",
+		"pressure",
+		"humidity",
+		"visibility",
+		"forecast-cards-container",
+		"weather-icon-container",
+	];
+
+	for (const id of elementIds) {
+		let element = document.getElementById(id);
+		element.innerHTML = "";
+	}
+
+	updateCardText();
 }
 
-function addForecastWeatherContent(forecastWeather, geoLocation) {
+function addForecastWeatherContent(forecastWeather) {
 	const forecastCards = document.getElementById("forecast-cards-container");
 	forecastCards.innerHTML = "";
 	for (const weather in forecastWeather) {
@@ -20,11 +38,10 @@ function addForecastWeatherContent(forecastWeather, geoLocation) {
 			"card",
 			"col",
 			"forecast-card",
-			//"bg-dark",
 			"bg-secondary",
 			"text-light"
 		);
-		card.id = weather;
+		card.id = weather; //Represents the key of the current object which is the date
 
 		// Adding card title
 		const weatherIcon = document.createElement("img");
@@ -56,44 +73,63 @@ function addForecastWeatherContent(forecastWeather, geoLocation) {
 }
 
 function addCurrentWeatherContent(currentWeather, geoLocation) {
-	let currentWeatherDate, currentWeatherCity, currentWeatherText;
 	const { name, state } = geoLocation;
-	let currentWeatherContainer = document.getElementById("current-weather");
-	if (!currentWeatherContainer) {
+	let weatherContainer = document.getElementById("weather");
+	if (!weatherContainer) {
 		const main = document.getElementById("main");
 		main.appendChild(createWeatherContainer());
 	}
-
-	currentWeatherDate = document.getElementById("current-weather-date");
-	currentWeatherCity = document.getElementById("current-weather-title");
-	currentWeatherText = document.getElementById("current-weather-text");
 	clearCurrentWeatherContent();
+
+	let currentWeatherDate = document.getElementById("current-weather-date");
+	let currentWeatherCity = document.getElementById("current-weather-title");
 
 	// Update Current Weather Header
 	currentWeatherDate.innerText =
 		currentWeather.dateTime.toFormat("LL/dd/yyyy hh:mm a");
 	currentWeatherCity.innerText = `${name}, ${stateNameToAbbreviation(state)}`;
+
+	// Creating weather icon
 	const weatherIcon = document.createElement("img");
 	weatherIcon.src = `http://openweathermap.org/img/wn/${currentWeather.icon}@2x.png`;
-	currentWeatherCity.appendChild(weatherIcon);
+	weatherIcon.id = "weather-icon";
+	weatherIcon.width = "100";
+
+	const weatherIconContainer = document.getElementById(
+		"weather-icon-container"
+	);
+	weatherIconContainer.appendChild(weatherIcon);
 
 	// Update Current Weather Information
-	let currentSpan;
-	const keySkipList = ["dateTime", "icon", "weatherId", "weather"];
-	for (const weatherObjectKey in currentWeather) {
-		if (keySkipList.includes(weatherObjectKey)) {
-			continue;
-		} else if (currentWeather[weatherObjectKey] instanceof Object) {
-			continue;
-		} else if (currentWeather[weatherObjectKey] == null) {
-			continue;
-		}
-		currentSpan = document.createElement("span");
-		currentSpan.id = weatherObjectKey;
-		currentSpan.innerText = `${weatherObjectKey}: ${currentWeather[weatherObjectKey]}`;
-		currentWeatherText.appendChild(currentSpan);
-		currentWeatherText.appendChild(document.createElement("br"));
-	}
+	const currentTemperature = document.getElementById("current-temperature");
+	currentTemperature.innerText = `${currentWeather.temperature}\u2109`;
+
+	const weatherDescription = document.getElementById("weather-description");
+	weatherDescription.innerText = `${currentWeather.description}`;
+
+	const feelsLike = document.getElementById("feels-like");
+	feelsLike.innerText = `Feels like ${currentWeather.feelsLikeTemp}\u2109`;
+
+	addSecondRowContent(
+		"high-low",
+		`${currentWeather.highTemp}\u2109 / ${currentWeather.lowTemp}\u2109`
+	);
+
+	addSecondRowContent(
+		"wind",
+		`${currentWeather.windSpeed} mph ${currentWeather.windDirection}`
+	);
+	addSecondRowContent("pressure", `${currentWeather.pressure} in`);
+	addSecondRowContent("humidity", `${currentWeather.humidity}%`);
+	addSecondRowContent("visibility", `${currentWeather.visibility} miles`);
+}
+
+function addSecondRowContent(parentContainerId, text) {
+	const paragraph = document.createElement("p");
+	paragraph.innerText = text;
+
+	const container = document.getElementById(parentContainerId);
+	container.appendChild(paragraph);
 }
 
 export {
