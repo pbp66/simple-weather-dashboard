@@ -29,12 +29,9 @@ class Weather extends API {
 			highTemp: response.main.temp_max,
 			pressure: (response.main.pressure / 33.863886666667).toFixed(0), // measured in hPa (100x Pa). Converted from hPa to inHg
 			humidity: response.main.humidity, // Measured in percent
-			visibility: response.visibility, // max is 10,000 meters
+			visibility: math.round(response.visibility / 1609, 1), // max is 10,000 meters (result converted to miles)
 			windSpeed: Math.round(response.wind.speed, 0), // miles/hr
 			windDirection: getWindDirection(response.wind.deg),
-			windGust: response.wind.gust
-				? Math.round(response.wind.gust, 0)
-				: 0, // miles/hr
 			cloudiness: response.clouds.all, // Measured in percent
 			weather: response.weather, // Full weather output if needed
 		};

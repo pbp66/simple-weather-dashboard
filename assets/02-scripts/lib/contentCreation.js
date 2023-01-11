@@ -73,9 +73,16 @@ function addCurrentWeatherContent(currentWeather, geoLocation) {
 	currentWeatherDate.innerText =
 		currentWeather.dateTime.toFormat("LL/dd/yyyy hh:mm a");
 	currentWeatherCity.innerText = `${name}, ${stateNameToAbbreviation(state)}`;
+
+	// Creating weather icon
 	const weatherIcon = document.createElement("img");
 	weatherIcon.src = `http://openweathermap.org/img/wn/${currentWeather.icon}@2x.png`;
-	currentWeatherCity.appendChild(weatherIcon);
+	weatherIcon.id = "weather-icon";
+	const weatherIconContainer = document.createElement("div");
+	weatherIconContainer.classList.add("card-image");
+	weatherIconContainer.id = "weather-icon-container";
+	weatherIconContainer.appendChild(weatherIcon);
+	currentWeatherText.appendChild(weatherIconContainer);
 
 	// Update Current Weather Information
 	let currentSpan;

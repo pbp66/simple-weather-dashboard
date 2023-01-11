@@ -32,7 +32,7 @@
 		<title>Weather Dashboard</title>
 	</head>
 	<body>
-		<header class="container-fluid bg-light-custom">
+		<header class="container-fluid bg-secondary-custom text-light">
 			<h1
 				class="text-center"
 				id="website-header"
@@ -49,7 +49,7 @@
 				id="search-container"
 			>
 				<div
-					class="container-fluid justify-content-start row input-group bg-light-custom search-item"
+					class="container-fluid justify-content-start row input-group bg-secondary-custom search-item text-light"
 					id="search"
 				>
 					<label
@@ -81,6 +81,190 @@
 						class="container-fluid justify-content-center search-history col"
 						id="search-history-list"
 					></ul>
+				</div>
+			</article>
+			<article
+				class="container-fluid col-6"
+				id="weather"
+			>
+				<div
+					class="container-fluid"
+					id="current-weather"
+				>
+					<div
+						class="card bg-secondary-custom text-light"
+						id="current-weather-card"
+					>
+						<div class="card-body current-weather-card">
+							<div class="container-fluid title-bar">
+								<h6
+									class="card-subtitle"
+									id="current-weather-date"
+								>
+									01/10/2023 08:24 PM
+								</h6>
+								<h4
+									class="card-title"
+									id="current-weather-title"
+								>
+									Plainfield, IN
+								</h4>
+							</div>
+							<div
+								class="card-text"
+								id="current-weather-text"
+							>
+								<div
+									class="container-fluid"
+									id="first-row"
+								>
+									<div
+										class="card-image current-weather-subset"
+										id="weather-icon-container"
+									>
+										<img
+											src="http://openweathermap.org/img/wn/04n@2x.png"
+											width="100"
+											id="weather-icon"
+										/>
+									</div>
+									<div
+										class="current-weather-subset"
+										id="current-temperature-container"
+									>
+										<p id="current-temperature">41℉</p>
+									</div>
+									<div class="current-weather-subset">
+										<p id="weather-description">
+											Mostly Cloudy
+										</p>
+										<p id="feels-like">Feels Like 37℉</p>
+									</div>
+								</div>
+								<div
+									class="container-fluid row"
+									id="second-row"
+								>
+									<div
+										class="col bg-light-custom text-dark"
+										id="high-low"
+									>
+										<h6>High / Low</h6>
+										<p>44℉ / 37℉</p>
+									</div>
+									<div
+										class="col bg-light-custom text-dark"
+										id="wind"
+									>
+										<h6>Wind</h6>
+										<p>6 mph NNE</p>
+									</div>
+									<div
+										class="col bg-light-custom text-dark"
+										id="pressure"
+									>
+										<h6>Pressure</h6>
+										<p>30 in</p>
+									</div>
+									<div
+										class="col bg-light-custom text-dark"
+										id="humidity"
+									>
+										<h6>Humidity</h6>
+										<p>81%</p>
+									</div>
+									<div
+										class="col bg-light-custom text-dark"
+										id="visbility"
+									>
+										<h6>Visibility</h6>
+										<p>9.1 mi</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="container-fluid">
+					<div
+						class="cards row"
+						id="forecast-cards-container"
+					>
+						<div
+							class="card col forecast-card bg-secondary-custom text-light"
+							id="01/11/2023"
+						>
+							<h5>
+								01/11/2023<img
+									src="http://openweathermap.org/img/wn/04n@2x.png"
+								/>
+							</h5>
+							<p>
+								<span>49℉ / 41℉</span><br /><span>884 inHg</span
+								><br /><span>82% Humidity</span>
+							</p>
+						</div>
+						<div
+							class="card col forecast-card bg-secondary-custom text-light"
+							id="01/12/2023"
+						>
+							<h5>
+								01/12/2023<img
+									src="http://openweathermap.org/img/wn/04n@2x.png"
+								/>
+							</h5>
+							<p>
+								<span>50℉ / 35℉</span><br /><span
+									>1007 inHg</span
+								><br /><span>93% Humidity</span>
+							</p>
+						</div>
+						<div
+							class="card col forecast-card bg-secondary-custom text-light"
+							id="01/13/2023"
+						>
+							<h5>
+								01/13/2023<img
+									src="http://openweathermap.org/img/wn/03n@2x.png"
+								/>
+							</h5>
+							<p>
+								<span>35℉ / 30℉</span><br /><span
+									>1021 inHg</span
+								><br /><span>82% Humidity</span>
+							</p>
+						</div>
+						<div
+							class="card col forecast-card bg-secondary-custom text-light"
+							id="01/14/2023"
+						>
+							<h5>
+								01/14/2023<img
+									src="http://openweathermap.org/img/wn/04n@2x.png"
+								/>
+							</h5>
+							<p>
+								<span>40℉ / 28℉</span><br /><span
+									>1026 inHg</span
+								><br /><span>72% Humidity</span>
+							</p>
+						</div>
+						<div
+							class="card col forecast-card bg-secondary-custom text-light"
+							id="01/15/2023"
+						>
+							<h5>
+								01/15/2023<img
+									src="http://openweathermap.org/img/wn/04d@2x.png"
+								/>
+							</h5>
+							<p>
+								<span>44℉ / 31℉</span><br /><span
+									>1022 inHg</span
+								><br /><span>58% Humidity</span>
+							</p>
+						</div>
+					</div>
 				</div>
 			</article>
 		</main>
