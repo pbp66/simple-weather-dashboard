@@ -1,7 +1,7 @@
 html,
 body {
 	height: 100%;
-	backdrop-filter: brightness(60%);
+	backdrop-filter: brightness(65%);
 }
 
 html,
@@ -30,7 +30,7 @@ article {
 }
 
 .bg-light-custom {
-	background: rgba(211, 211, 211, 0.4);
+	background: rgba(211, 211, 211, 0.6);
 	border-radius: 15px;
 }
 
@@ -174,4 +174,8 @@ article {
 	padding: 10px;
 	margin-left: 1px;
 	padding-bottom: 20px;
+}
+
+#city-input {
+	border: solid 2px;
 }
