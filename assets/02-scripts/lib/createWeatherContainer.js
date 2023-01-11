@@ -61,6 +61,9 @@ function createCardText() {
 	const cardText = document.createElement("div");
 	cardText.classList.add("card-text");
 	cardText.id = "current-weather-text";
+	cardText.appendChild(firstRow);
+	cardText.appendChild(secondRow);
+
 	return cardText;
 }
 
