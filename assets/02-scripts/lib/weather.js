@@ -23,13 +23,14 @@ class Weather extends API {
 			dateTime: luxon.DateTime.fromSeconds(response.dt),
 			icon: response.weather[0].icon,
 			weatherId: response.weather[0].id,
-			temperature: response.main.temp,
-			feelsLikeTemp: response.main.feels_like,
-			lowTemp: response.main.temp_min,
-			highTemp: response.main.temp_max,
-			pressure: (response.main.pressure / 33.863886666667).toFixed(0), // measured in hPa (100x Pa). Converted from hPa to inHg
-			humidity: response.main.humidity, // Measured in percent
-			visibility: math.round(response.visibility / 1609, 1), // max is 10,000 meters (result converted to miles)
+			description: response.weather[0].description,
+			temperature: Math.round(response.main.temp, 0),
+			feelsLikeTemp: Math.round(response.main.feels_like, 0),
+			lowTemp: Math.round(response.main.temp_min, 0),
+			highTemp: Math.round(response.main.temp_max, 0),
+			pressure: Math.round(response.main.pressure / 33.863886666667, 0), // measured in hPa (100x Pa). Converted from hPa to inHg
+			humidity: Math.round(response.main.humidity, 0), // Measured in percent
+			visibility: Math.round(response.visibility / 1609, 1), // max is 10,000 meters (result converted to miles)
 			windSpeed: Math.round(response.wind.speed, 0), // miles/hr
 			windDirection: getWindDirection(response.wind.deg),
 			cloudiness: response.clouds.all, // Measured in percent

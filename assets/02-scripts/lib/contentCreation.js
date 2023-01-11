@@ -78,29 +78,43 @@ function addCurrentWeatherContent(currentWeather, geoLocation) {
 	const weatherIcon = document.createElement("img");
 	weatherIcon.src = `http://openweathermap.org/img/wn/${currentWeather.icon}@2x.png`;
 	weatherIcon.id = "weather-icon";
-	const weatherIconContainer = document.createElement("div");
-	weatherIconContainer.classList.add("card-image");
-	weatherIconContainer.id = "weather-icon-container";
+	weatherIcon.width = "100";
+
+	const weatherIconContainer = document.getElementById(
+		"weather-icon-container"
+	);
 	weatherIconContainer.appendChild(weatherIcon);
-	currentWeatherText.appendChild(weatherIconContainer);
 
 	// Update Current Weather Information
-	let currentSpan;
-	const keySkipList = ["dateTime", "icon", "weatherId", "weather"];
-	for (const weatherObjectKey in currentWeather) {
-		if (keySkipList.includes(weatherObjectKey)) {
-			continue;
-		} else if (currentWeather[weatherObjectKey] instanceof Object) {
-			continue;
-		} else if (currentWeather[weatherObjectKey] == null) {
-			continue;
-		}
-		currentSpan = document.createElement("span");
-		currentSpan.id = weatherObjectKey;
-		currentSpan.innerText = `${weatherObjectKey}: ${currentWeather[weatherObjectKey]}`;
-		currentWeatherText.appendChild(currentSpan);
-		currentWeatherText.appendChild(document.createElement("br"));
-	}
+	const currentTemperature = document.getElementById("current-temperature");
+	currentTemperature.innerText = `${currentWeather.temperature}\u2109`;
+
+	const weatherDescription = document.getElementById("weather-description");
+	weatherDescription.innerText = `${currentWeather.description}`;
+
+	const feelsLike = document.getElementById("feels-like");
+	feelsLike.innerText = `Feels like ${currentWeather.feelsLikeTemp}\u2109`;
+
+	addSecondRowContent(
+		"high-low",
+		`${currentWeather.highTemp}\u2109 / ${currentWeather.lowTemp}\u2109`
+	);
+
+	addSecondRowContent(
+		"wind",
+		`${currentWeather.windSpeed} mph ${currentWeather.windDirection}`
+	);
+	addSecondRowContent("pressure", `${currentWeather.pressure} in`);
+	addSecondRowContent("humidity", `${currentWeather.humidity}%`);
+	addSecondRowContent("visibility", `${currentWeather.visibility} miles`);
+}
+
+function addSecondRowContent(parentContainerId, text) {
+	const paragraph = document.createElement("p");
+	paragraph.innerText = text;
+
+	const container = document.getElementById(parentContainerId);
+	container.appendChild(paragraph);
 }
 
 export {
