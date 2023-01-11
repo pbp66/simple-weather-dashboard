@@ -1,4 +1,10 @@
 html,
+body {
+	height: 100%;
+	backdrop-filter: brightness(65%);
+}
+
+html,
 body,
 main {
 	width: 100%;
@@ -7,6 +13,9 @@ main {
 /* Set Dynamically based on current weather */
 body {
 	background-image: url(../03-images/storming.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-attachment: fixed;
 	background-size: cover;
 	justify-content: center;
 }
@@ -22,6 +31,11 @@ article {
 
 .bg-light-custom {
 	background: rgba(211, 211, 211, 0.6);
+	border-radius: 15px;
+}
+
+.bg-secondary-custom {
+	background: rgba(108, 117, 125, 0.6);
 	border-radius: 15px;
 }
 
@@ -61,15 +75,22 @@ article {
 	max-width: 175px;
 	border-radius: 15px;
 	margin: 5px 10px 15px 10px;
+	padding-top: 10px;
 }
 
 .previous-entry {
 	width: 100%;
 }
 
+.current-weather-subset {
+	padding: 5px;
+	margin: 5px;
+}
+
 #website-header {
 	padding: 10px 0px 15px 0px;
 	margin: 0px 10px 15px 10px;
+	border-radius: 0px;
 }
 
 #weather {
@@ -104,6 +125,7 @@ article {
 
 #current-weather-card {
 	width: 100%;
+	border-radius: 15px;
 }
 
 #current-weather-date {
@@ -116,8 +138,49 @@ article {
 	margin: 0px 0px 10px 5px;
 }
 
+#current-weather-text {
+	display: flex;
+	flex-flow: column wrap;
+}
+
+#first-row {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+}
+
+#second-row .col {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	margin: 0px 5px;
+}
+
+#second-row .col h6,
+#second-row .col p {
+	width: 100%;
+	/* border: solid 2px; */
+	text-align: center;
+	padding: 0px;
+	margin: 0px;
+}
+
+#current-temperature {
+	font-size: 36pt;
+	vertical-align: middle;
+}
+
 #search {
 	margin-right: 0px;
 	padding: 10px;
 	margin-left: 1px;
+	padding-bottom: 20px;
+}
+
+#city-input {
+	border: solid 2px;
+}
+
+#header {
+	border-radius: 0px;
 }

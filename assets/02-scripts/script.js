@@ -1,5 +1,4 @@
 // TODO: Change background based on weather type.
-// TODO: Final stylistic changes.
 
 import {
 	Weather,
@@ -120,7 +119,7 @@ async function search(event) {
 	}
 
 	addCurrentWeatherContent(currentWeather, geoLocation);
-	addForecastWeatherContent(forecast, geoLocation);
+	addForecastWeatherContent(forecast);
 	addToSearchHistory(
 		latitude,
 		longitude,
