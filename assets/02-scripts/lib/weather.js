@@ -74,11 +74,17 @@ class Weather extends API {
 		let prevDate = luxon.DateTime.fromSeconds(response.list[0].dt).toFormat(
 			"LL/dd/yyyy"
 		);
+		const now = luxon.DateTime.now().toFormat("LL/dd/yyyy");
 		let lastItem = response.list.slice(-1);
 		for (const item of response.list) {
 			[date, time, meridiem] = luxon.DateTime.fromSeconds(item.dt)
 				.toFormat("LL/dd/yyyy hh:mm a")
 				.split(" ");
+
+			if (now === prevDate) {
+				prevDate = date;
+				continue;
+			}
 
 			let hour = time.split(":")[0];
 			if (hour < 4 && meridiem.toLowerCase() === "pm") {
