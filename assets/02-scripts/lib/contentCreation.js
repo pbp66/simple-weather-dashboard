@@ -2,15 +2,28 @@ import stateNameToAbbreviation from "./states.js";
 import createWeatherContainer from "./createWeatherContainer.js";
 
 function clearCurrentWeatherContent() {
-	let currentWeatherDate = document.getElementById("current-weather-date");
-	let currentWeatherCity = document.getElementById("current-weather-title");
-	let currentWeatherText = document.getElementById("current-weather-text");
-	currentWeatherDate.innerHTML = "";
-	currentWeatherCity.innerHTML = "";
-	currentWeatherText.innerHTML = "";
+	const elementIds = [
+		"current-weather-date",
+		"current-weather-title",
+		"current-temperature",
+		"weather-description",
+		"feels-like",
+		"high-low",
+		"wind",
+		"pressure",
+		"humidity",
+		"visibility",
+		"forecast-cards-container",
+		"weather-icon-container",
+	];
+
+	for (const id of elementIds) {
+		let element = document.getElementById(id);
+		element.innerHTML = "";
+	}
 }
 
-function addForecastWeatherContent(forecastWeather, geoLocation) {
+function addForecastWeatherContent(forecastWeather) {
 	const forecastCards = document.getElementById("forecast-cards-container");
 	forecastCards.innerHTML = "";
 	for (const weather in forecastWeather) {
@@ -20,11 +33,10 @@ function addForecastWeatherContent(forecastWeather, geoLocation) {
 			"card",
 			"col",
 			"forecast-card",
-			//"bg-dark",
 			"bg-secondary",
 			"text-light"
 		);
-		card.id = weather;
+		card.id = weather; //Represents the key of the current object which is the date
 
 		// Adding card title
 		const weatherIcon = document.createElement("img");
@@ -56,18 +68,16 @@ function addForecastWeatherContent(forecastWeather, geoLocation) {
 }
 
 function addCurrentWeatherContent(currentWeather, geoLocation) {
-	let currentWeatherDate, currentWeatherCity, currentWeatherText;
 	const { name, state } = geoLocation;
-	let currentWeatherContainer = document.getElementById("current-weather");
-	if (!currentWeatherContainer) {
+	let weatherContainer = document.getElementById("weather");
+	if (!weatherContainer) {
 		const main = document.getElementById("main");
 		main.appendChild(createWeatherContainer());
 	}
-
-	currentWeatherDate = document.getElementById("current-weather-date");
-	currentWeatherCity = document.getElementById("current-weather-title");
-	currentWeatherText = document.getElementById("current-weather-text");
 	clearCurrentWeatherContent();
+
+	let currentWeatherDate = document.getElementById("current-weather-date");
+	let currentWeatherCity = document.getElementById("current-weather-title");
 
 	// Update Current Weather Header
 	currentWeatherDate.innerText =

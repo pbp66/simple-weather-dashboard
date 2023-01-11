@@ -48,16 +48,8 @@ function createCardTitle() {
 }
 
 function createCardText() {
-	const firstRow = document.createElement("div");
-	firstRow.classList.add("container-fluid");
-	firstRow.id = "first-row";
-	firstRow = createFirstRow();
-
-	const secondRow = document.createElement("div");
-	secondRow.classList.add("container-fluid");
-	secondRow.id = "second-row";
-	secondRow = createSecondRow();
-
+	const firstRow = createFirstRow();
+	const secondRow = createSecondRow();
 	const cardText = document.createElement("div");
 	cardText.classList.add("card-text");
 	cardText.id = "current-weather-text";
@@ -110,6 +102,8 @@ function createFirstRow() {
 	firstRow.appendChild(imageContainer);
 	firstRow.appendChild(currentTemperatureContainer);
 	firstRow.appendChild(weatherDescriptionContainer);
+
+	console.log(firstRow);
 
 	return firstRow;
 }

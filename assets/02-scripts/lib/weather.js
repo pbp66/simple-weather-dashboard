@@ -23,7 +23,7 @@ class Weather extends API {
 			dateTime: luxon.DateTime.fromSeconds(response.dt),
 			icon: response.weather[0].icon,
 			weatherId: response.weather[0].id,
-			description: response.weather[0].description,
+			description: capitalize(response.weather[0].description),
 			temperature: Math.round(response.main.temp, 0),
 			feelsLikeTemp: Math.round(response.main.feels_like, 0),
 			lowTemp: Math.round(response.main.temp_min, 0),
@@ -66,16 +66,21 @@ class Weather extends API {
 		let prevDate = luxon.DateTime.fromSeconds(response.list[0].dt).toFormat(
 			"LL/dd/yyyy"
 		);
-		const now = luxon.DateTime.now().toFormat("LL/dd/yyyy");
+		const now = luxon.DateTime.now();
 		let lastItem = response.list.slice(-1);
 		for (const item of response.list) {
 			[date, time, meridiem] = luxon.DateTime.fromSeconds(item.dt)
 				.toFormat("LL/dd/yyyy hh:mm a")
 				.split(" ");
 
-			if (now === prevDate) {
-				prevDate = date;
-				continue;
+			if (now.toFormat("LL/dd/yyyy") === prevDate) {
+				if (
+					parseInt(now.toFormat("hh")) < 7 &&
+					now.toFormat("a").toLowerCase === "am"
+				) {
+					prevDate = date;
+					continue;
+				}
 			}
 
 			let hour = time.split(":")[0];
@@ -180,6 +185,16 @@ function getWindDirection(degrees) {
 		direction = "N";
 	}
 	return direction;
+}
+
+function capitalize(str) {
+	return str
+		.split(" ")
+		.map(
+			(element) =>
+				element.substring(0, 1).toUpperCase() + element.substring(1)
+		)
+		.join(" ");
 }
 
 export default Weather;

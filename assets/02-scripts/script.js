@@ -121,7 +121,7 @@ async function search(event) {
 	}
 
 	addCurrentWeatherContent(currentWeather, geoLocation);
-	addForecastWeatherContent(forecast, geoLocation);
+	addForecastWeatherContent(forecast);
 	addToSearchHistory(
 		latitude,
 		longitude,
