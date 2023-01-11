@@ -1,6 +1,4 @@
 // TODO: Change background based on weather type.
-// TODO: Change current weather display
-// TODO: Final stylistic changes.
 
 import {
 	Weather,

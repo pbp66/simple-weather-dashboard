@@ -1,4 +1,4 @@
-export default function createWeatherContainer() {
+function createWeatherContainer() {
 	const currentWeatherCard = document.createElement("div");
 	currentWeatherCard.classList.add(
 		"card",
@@ -103,8 +103,6 @@ function createFirstRow() {
 	firstRow.appendChild(currentTemperatureContainer);
 	firstRow.appendChild(weatherDescriptionContainer);
 
-	console.log(firstRow);
-
 	return firstRow;
 }
 
@@ -133,3 +131,12 @@ function createSecondRowContainer(id, title) {
 
 	return container;
 }
+
+function updateCardText() {
+	const cardText = document.getElementById("current-weather-text");
+	cardText.innerHTML = "";
+	cardText.appendChild(createFirstRow());
+	cardText.appendChild(createSecondRow());
+}
+
+export { createWeatherContainer, updateCardText };

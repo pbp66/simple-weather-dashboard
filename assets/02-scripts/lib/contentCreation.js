@@ -1,5 +1,8 @@
 import stateNameToAbbreviation from "./states.js";
-import createWeatherContainer from "./createWeatherContainer.js";
+import {
+	createWeatherContainer,
+	updateCardText,
+} from "./createWeatherContainer.js";
 
 function clearCurrentWeatherContent() {
 	const elementIds = [
@@ -21,6 +24,8 @@ function clearCurrentWeatherContent() {
 		let element = document.getElementById(id);
 		element.innerHTML = "";
 	}
+
+	updateCardText();
 }
 
 function addForecastWeatherContent(forecastWeather) {
