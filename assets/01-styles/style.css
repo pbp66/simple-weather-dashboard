@@ -90,6 +90,7 @@ article {
 #website-header {
 	padding: 10px 0px 15px 0px;
 	margin: 0px 10px 15px 10px;
+	border-radius: 0px;
 }
 
 #weather {
@@ -178,4 +179,8 @@ article {
 
 #city-input {
 	border: solid 2px;
+}
+
+#header {
+	border-radius: 0px;
 }
