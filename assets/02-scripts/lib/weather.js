@@ -27,21 +27,15 @@ class Weather extends API {
 			feelsLikeTemp: response.main.feels_like,
 			lowTemp: response.main.temp_min,
 			highTemp: response.main.temp_max,
-			pressure: response.main.pressure / 33.863886666667, // measured in hPa (100x Pa). Converted from hPa to inHg
+			pressure: (response.main.pressure / 33.863886666667).toFixed(0), // measured in hPa (100x Pa). Converted from hPa to inHg
 			humidity: response.main.humidity, // Measured in percent
 			visibility: response.visibility, // max is 10,000 meters
-			windSpeed: response.wind.speed, // miles/hr
-			windDirection: response.wind.deg,
-			windGust: response.wind.gust ? response.wind.gust : 0, // miles/hr
+			windSpeed: Math.round(response.wind.speed, 0), // miles/hr
+			windDirection: getWindDirection(response.wind.deg),
+			windGust: response.wind.gust
+				? Math.round(response.wind.gust, 0)
+				: 0, // miles/hr
 			cloudiness: response.clouds.all, // Measured in percent
-			rainVolume: response.rain ? response.rain : 0,
-			snowVolume: response.snow ? response.snow : 0,
-			sunrise: response.sys.sunrise
-				? luxon.DateTime.fromSeconds(response.sys.sunrise)
-				: null,
-			sunset: response.sys.sunset
-				? luxon.DateTime.fromSeconds(response.sys.sunset)
-				: null,
 			weather: response.weather, // Full weather output if needed
 		};
 		return weather;
@@ -109,7 +103,10 @@ class Weather extends API {
 					icon: icon,
 					lowTemp: Math.round(lowTemp, 0),
 					highTemp: Math.round(highTemp, 0),
-					pressure: Math.round(pressureSum / ++counter, 0),
+					pressure: Math.round(
+						pressureSum / ++counter / 33.863886666667,
+						0
+					),
 					humidity: Math.round(humiditySum / ++counter, 0),
 				};
 
@@ -121,7 +118,10 @@ class Weather extends API {
 					icon: item.weather[0].icon,
 					lowTemp: Math.round(lowTemp, 0),
 					highTemp: Math.round(highTemp, 0),
-					pressure: Math.round(pressureSum / counter, 0),
+					pressure: Math.round(
+						pressureSum / counter / 33.863886666667,
+						0
+					),
 					humidity: Math.round(humiditySum / counter, 0),
 				};
 
@@ -141,6 +141,47 @@ class Weather extends API {
 	async getWeather() {
 		return (await fetch(this.url)).json();
 	}
+}
+
+function getWindDirection(degrees) {
+	/**
+	 * Source: http://snowfence.umn.edu/Components/winddirectionanddegrees.htm
+	 */
+	let direction = "";
+	if (degrees > 11.25 && degrees <= 33.75) {
+		direction = "NNE";
+	} else if (degrees > 33.75 && degrees <= 56.25) {
+		direction = "NE";
+	} else if (degrees > 56.25 && degrees <= 78.75) {
+		direction = "ENE";
+	} else if (degrees > 78.75 && degrees <= 101.25) {
+		direction = "E";
+	} else if (degrees > 101.25 && degrees <= 123.75) {
+		direction = "ESE";
+	} else if (degrees > 123.75 && degrees <= 146.25) {
+		direction = "SE";
+	} else if (degrees > 146.25 && degrees <= 168.75) {
+		direction = "SSE";
+	} else if (degrees > 168.75 && degrees <= 191.25) {
+		direction = "S";
+	} else if (degrees > 191.25 && degrees <= 213.75) {
+		direction = "SSW";
+	} else if (degrees > 213.75 && degrees <= 236.25) {
+		direction = "SW";
+	} else if (degrees > 236.25 && degrees <= 258.75) {
+		direction = "WSW";
+	} else if (degrees > 258.75 && degrees <= 281.25) {
+		direction = "W";
+	} else if (degrees > 281.25 && degrees <= 303.75) {
+		direction = "WNW";
+	} else if (degrees > 303.75 && degrees <= 326.25) {
+		direction = "NW";
+	} else if (degrees > 326.25 && degrees <= 348.75) {
+		direction = "NNW";
+	} else {
+		direction = "N";
+	}
+	return direction;
 }
 
 export default Weather;
