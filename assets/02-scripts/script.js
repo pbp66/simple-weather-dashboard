@@ -145,7 +145,7 @@ function updateWeatherBackground(category, icon) {
 
 	switch (category) {
 		case "thunderstorm":
-			urlPath = "../assets/03-images/storming-min.jpg";
+			urlPath = "./assets/03-images/storming-min.jpg";
 			footerContent = createFooter(
 				"storming",
 				"https://pixabay.com/users/felixmittermeier-4397258/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3441687",
@@ -153,7 +153,7 @@ function updateWeatherBackground(category, icon) {
 			);
 			break;
 		case "drizzle":
-			urlPath = "../assets/03-images/drizzle-min.jpg";
+			urlPath = "./assets/03-images/drizzle-min.jpg";
 			footerContent = createFooter(
 				"drizzle",
 				"https://www.freepik.com/free-photo/water-texture-background-rainy-window-cloudy-day_18998865.htm#query=rain&position=14&from_view=search&track=sph",
@@ -161,7 +161,7 @@ function updateWeatherBackground(category, icon) {
 			);
 			break;
 		case "rain":
-			urlPath = "../assets/03-images/rain-min.jpg";
+			urlPath = "./assets/03-images/rain-min.jpg";
 			footerContent = createFooter(
 				"rain",
 				"https://www.freepik.com/free-photo/rain-outside-windows-villa_2441313.htm#query=rain&position=1&from_view=search&track=sph",
@@ -169,7 +169,7 @@ function updateWeatherBackground(category, icon) {
 			);
 			break;
 		case "snow":
-			urlPath = "../assets/03-images/snowy-weather-min.jpg";
+			urlPath = "./assets/03-images/snowy-weather-min.jpg";
 			footerContent = createFooter(
 				"snow",
 				"https://www.freepik.com/premium-photo/snow-black-background-snowflakes-overlay-snow-background_26757657.htm",
@@ -177,7 +177,7 @@ function updateWeatherBackground(category, icon) {
 			);
 			break;
 		case "clear":
-			urlPath = "../assets/03-images/clear-sky-min.jpg";
+			urlPath = "./assets/03-images/clear-sky-min.jpg";
 			footerContent = createFooter(
 				"clear-sky",
 				"https://www.pexels.com/photo/blue-sky-96622/",
@@ -189,7 +189,7 @@ function updateWeatherBackground(category, icon) {
 			const newIcon = iconStringArray[0] + iconStringArray[1];
 			switch (newIcon) {
 				case "02":
-					urlPath = "../assets/03-images/few-clouds-min.jpg";
+					urlPath = "./assets/03-images/few-clouds-min.jpg";
 					footerContent = createFooter(
 						"few-clouds",
 						"https://www.freepik.com/free-photo/blue-sky-with-clouds_985381.htm#query=cloudy&from_query=partly%20cloudy&position=29&from_view=search&track=sph",
@@ -197,7 +197,7 @@ function updateWeatherBackground(category, icon) {
 					);
 					break;
 				case "03":
-					urlPath = "../assets/03-images/partly-cloudy-min.jpg";
+					urlPath = "./assets/03-images/partly-cloudy-min.jpg";
 					footerContent = createFooter(
 						"partly-cloudy",
 						"https://www.pexels.com/photo/clouds-landscape-photography-531972/",
@@ -205,7 +205,7 @@ function updateWeatherBackground(category, icon) {
 					);
 					break;
 				case "04":
-					urlPath = "../assets/03-images/cloudy-min.jpg";
+					urlPath = "./assets/03-images/cloudy-min.jpg";
 					footerContent = createFooter(
 						"mostly-cloudy",
 						"https://www.freepik.com/free-photo/cloudy-sky-landscape-wallpaper_19380999.htm#query=grey%20cloudy%20sky&position=4&from_view=keyword",
@@ -214,7 +214,7 @@ function updateWeatherBackground(category, icon) {
 					break;
 				default:
 					// For errors, use the clear sky background
-					urlPath = "../assets/03-images/clear-sky-min.jpg";
+					urlPath = "./assets/03-images/clear-sky-min.jpg";
 					footerContent = createFooter(
 						"clear-sky",
 						"https://www.pexels.com/photo/blue-sky-96622/",
@@ -225,14 +225,14 @@ function updateWeatherBackground(category, icon) {
 		default:
 			// Atmospheric conditions
 			if (category === "tornado") {
-				urlPath = "../03-images/tornado-min.jpg";
+				urlPath = "./assets/03-images/tornado-min.jpg";
 				footerContent = createFooter(
 					"tornado",
 					"https://www.pexels.com/photo/lightning-and-tornado-hitting-village-1446076/",
 					"Ralph W. Lambrecht"
 				);
 			} else {
-				urlPath = "../assets/03-images/windy-min.jpg";
+				urlPath = "./assets/03-images/windy-min.jpg";
 				footerContent = createFooter(
 					"windy",
 					"https://unsplash.com/@hvranic?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText",
