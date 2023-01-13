@@ -38,8 +38,12 @@ function addToSearchHistory(latitude, longitude, location) {
 		// Set the max history limit to 10 entries. If more than 10 entires, remove the oldest entry
 		if (searchHistory.length >= 10) {
 			searchHistory.shift();
+			searchHistoryList.removeChild(
+				searchHistoryList.getElementsByTagName("li")[0]
+			);
 		}
 		searchHistory.push(location);
+		console.log(searchHistory);
 	}
 }
 
@@ -133,6 +137,8 @@ async function search(event) {
 }
 
 function updateWeatherBackground(category, icon) {
+	const footer = document.getElementsByTagName("footer")[0];
+	footer.innerHTML = "";
 	category = category.toLowerCase();
 	let urlPath = "";
 	let footerContent;
@@ -237,19 +243,20 @@ function updateWeatherBackground(category, icon) {
 
 	const body = document.getElementsByTagName("body")[0];
 	body.style.backgroundImage = `url(${urlPath})`;
-	body.appendChild(footerContent);
+	footer.appendChild(footerContent);
 }
 
 function createFooter(id, href, hrefInnerText) {
 	let footerContent = document.createElement("div");
 	footerContent.classList.add("footer-content");
 	footerContent.id = id;
-	footerContent.innerText = "Background Image by";
+	footerContent.innerText = "Background Image by ";
 	const attributionLink = document.createElement("a");
+	attributionLink.classList.add("link-warning");
 	attributionLink.href = href;
 	attributionLink.innerText = hrefInnerText;
 	footerContent.appendChild(attributionLink);
-	return document.createElement("footer").appendChild(footerContent);
+	return footerContent;
 }
 
 searchButton.addEventListener("click", search);
