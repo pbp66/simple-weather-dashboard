@@ -33,13 +33,17 @@ function addToSearchHistory(latitude, longitude, location) {
 
 		// Set the max history limit to 10 entries. If more than 10 entires, remove the oldest entry
 		if (searchHistory.length >= 10) {
+			localStorage.removeItem(searchHistory[0]);
 			searchHistory.shift();
 			searchHistoryList.removeChild(
 				searchHistoryList.getElementsByTagName("li")[0]
 			);
 		}
 		searchHistory.push(location);
-		console.log(searchHistory);
+		localStorage.setItem(
+			location,
+			JSON.stringify({ lat: latitude, lon: longitude })
+		);
 	}
 }
 
