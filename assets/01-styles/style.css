@@ -12,7 +12,7 @@ main {
 
 /* Set Dynamically based on current weather */
 body {
-	background-image: url(../03-images/storming.jpg);
+	background-image: url(../03-images/clear-sky-min.jpg);
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-attachment: fixed;
