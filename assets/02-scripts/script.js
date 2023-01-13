@@ -1,7 +1,3 @@
-// TODO: Change background based on weather type.
-// TODO: Create and Finish README.md
-// TODO: Submit Assignment
-
 import {
 	Weather,
 	Geocoding,
