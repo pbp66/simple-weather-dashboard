@@ -23,7 +23,15 @@ There is nothing to install with this project. To see the final product, please 
 
 ## Usage
 
-TODO: Add screenshots for usage
+Upon visiting the website, you will see a mostly blank screen with a search box in the center. To see the weather for a city, specify a zip code or search for a city with the format `city, ST` like `Madison, WI`.
+![default-page](./assets/03-images/readme/default-page.png)
+
+Searching Madison, WI in the winter may result in a weather page looking like this:
+![webpage-after-search](./assets/03-images/readme/webpage-after-search.png)
+
+Your search history will appear on the right hand side of the screen. The large block of content is the current weather, providing several key pieces of information. Underneath will be the forecast for the next 120 hours.
+
+All information is sourced from the Open Weather API.
 
 ## License
 
