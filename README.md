@@ -2,8 +2,9 @@
 
 ## Description
 
-TODO: Complete Description
-A simple website that displays weather for any city within the U.S.
+A simple website that displays weather for any city within the U.S. Both the current weather and forecast are provided with each search. The latest 10 searches are added to the search history on the right side of the page. Clicking on a previous search will reload the weather for that city. If you search for more than 10 cities, the oldest will be removed and deleted. All of the weather and geocoding data is fetched from the Open Weather API free resources.
+
+This site does not provide functionality for any location outside of the U.S.
 
 User Story:
 
