@@ -29,6 +29,15 @@ article {
 	margin: 10px;
 }
 
+footer {
+	text-align: center;
+	padding: 5px;
+	margin: 5px 0px 0px 0px;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+}
+
 .bg-light-custom {
 	background: rgba(211, 211, 211, 0.6);
 	border-radius: 15px;
@@ -182,5 +191,9 @@ article {
 }
 
 #header {
+	border-radius: 0px;
+}
+
+#background-reference {
 	border-radius: 0px;
 }
